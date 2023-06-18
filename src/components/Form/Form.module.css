@@ -59,3 +59,7 @@
     font-weight: 300;
     line-height: 19px;
 }
+
+.error {
+    color :#FC4747;
+}
