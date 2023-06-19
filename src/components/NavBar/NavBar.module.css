@@ -1,0 +1,21 @@
+.navigation {
+    display: flex;
+    justify-content: space-around;
+    background-color: #161D2F;
+    height: 56px;
+}
+
+.navigation > * {
+    align-self: center;
+}
+
+.menu {
+    display: flex;
+}
+
+.menu button{
+    margin: 0 10px;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}

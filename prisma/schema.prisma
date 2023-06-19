@@ -18,3 +18,44 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+model Media {
+  id           String  @id @default(auto()) @map("_id") @db.ObjectId
+  // Other fields
+  title        String
+  thumbnail    String
+  year         Int
+  category     String
+  rating       String
+  isTrending   Boolean
+  isBookmarked Boolean
+}
+
+model Thumbnail {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  trending  Trending @relation(fields: [trendingId], references: [id])
+  trendingId String @db.ObjectId
+  regular   Regular @relation(fields: [regularId], references: [id])
+  regularId String @db.ObjectId
+}
+
+model Trending {
+  id         String      @id @default(auto()) @map("_id") @db.ObjectId
+  small      String
+  large      String
+  Thumbnail Thumbnail[]
+}
+
+model Regular {
+  id         String      @id @default(auto()) @map("_id") @db.ObjectId
+  small      String
+  medium     String
+  large      String
+  Thumbnail Thumbnail[]
+}
+
+
+
+
+
+
