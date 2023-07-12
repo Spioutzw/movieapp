@@ -1,9 +1,8 @@
-import Image from 'next/image'
-import styles from './page.module.css'
-import Register from './(auth)/register/page'
+'use client'
+import Login from './(auth)/login/page'
 
 export default function Home() {
   return (
-    <Register />
+      <Login />
   )
 }

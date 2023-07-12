@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import * as yup from "yup";
 import Form from '@/components/Form/Form';
 import style from './page.module.css';
+import { useRouter } from 'next/navigation';
 
 const inputs = [
     {
@@ -28,6 +29,13 @@ const inputs = [
 function Register() {
 
     const [errorBack, setErrorBack] = useState(null);
+    const { push } = useRouter();
+
+    if (localStorage.getItem('user')) {
+      // Si l'utilisateur est connecté, redirigez-le vers la page d'accueil
+      push('/home');
+      return null;
+    }
 
     const handleSubmit = async (data) => {
         const response = await fetch('/api/register', {
@@ -41,6 +49,7 @@ function Register() {
         if (response.ok) {
           // If the response is successful, redirect the user to the home page
           window.alert('You have been successfully registered');
+          router.push('/login');
           setErrorBack(null);
         } else {
           // If there is an error, display an error message
