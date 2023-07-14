@@ -23,3 +23,9 @@ li {
   list-style: none;
 }
 
+.swiper-wrapper {
+  display: flex;
+}
+
+
+

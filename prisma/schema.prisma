@@ -23,7 +23,7 @@ model Media {
   id           String  @id @default(auto()) @map("_id") @db.ObjectId
   // Other fields
   title        String
-  thumbnail    String
+  thumbnail    Json
   year         Int
   category     String
   rating       String

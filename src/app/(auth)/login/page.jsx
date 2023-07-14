@@ -1,6 +1,6 @@
 'use client'
 import Form from '@/components/Form/Form'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation';
 
 
@@ -23,11 +23,13 @@ function Login() {
   const [errorBack, setErrorBack] = useState(null);
   const { push } = useRouter();
 
-  if (localStorage.getItem('user')) {
-    // Si l'utilisateur est connecté, redirigez-le vers la page d'accueil
-    push('/home');
-    return null;
-  }
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user) {
+      push('/home');
+    }
+  }, [])
+
 
   const handleSubmit = async (data) => {
 
