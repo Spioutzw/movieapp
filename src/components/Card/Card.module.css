@@ -45,3 +45,17 @@
 .icon {
     margin-right: 5px;
 }
+
+.containerImage {
+    position: relative;
+}
+
+.bookmark {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+}
+
+.bookmark:hover {
+    cursor: pointer;
+}

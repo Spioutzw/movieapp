@@ -36,6 +36,7 @@ function page() {
             <div className={style.containerSeries}>
                 {series.map((serie) => (
                     <Card
+                        fetch={fetchData}
                         key={serie.id}
                         film={serie}
                         onClick={() => push(`/movie/${movie.id}`)}

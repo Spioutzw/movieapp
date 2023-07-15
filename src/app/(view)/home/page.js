@@ -68,11 +68,12 @@ function page() {
       <NavBar />
       <SearchBar />
       <h3 className={style.h3}>Trending</h3>
-      <Slider arrows={false} ref={slideRef}  >
+      <Slider ref={slideRef}  >
         <div className={style.containerMovieTrending} >
           {trendingMovies.map((movie, id) => (
-            <Slide index={id}>
+            <Slide key={id} index={id}>
               <CardTrending
+                fetch={fetchData}
                 key={movie.id}
                 film={movie}
                 onClick={() => push(`/movie/${movie.id}`)}

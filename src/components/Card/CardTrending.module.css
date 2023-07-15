@@ -65,3 +65,17 @@
     font-weight: 300;
     line-height: normal;
 }
+
+.containerImage {
+    position: relative;
+}
+
+.bookmark {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+}
+
+.bookmark:hover {
+    cursor: pointer;
+}
