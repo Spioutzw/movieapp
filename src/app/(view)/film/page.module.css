@@ -56,5 +56,16 @@
 
   
 }
+
+@media screen and (min-width: 2000px) {
+
+  
+
+  .containerMovie {
+    grid-template-columns: repeat(6, 0.1fr);
+  }
+  
+}
+  
   
 

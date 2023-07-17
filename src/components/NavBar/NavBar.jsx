@@ -76,7 +76,7 @@ function NavBar() {
                 <Link href={"/bookmarked"}><button><Image src="/assets/icon-nav-bookmark.svg" alt="Menu 4" width={16} height={16} /></button></Link>
             </div>
             <div className={style.profilePic} onClick={handleAvatarClick}>
-                <Image src={avatar} alt="Profile Picture" width={24} height={24} />
+                <Image className={style.avatar} src={avatar} alt="Profile Picture" width={24} height={24} />
             </div>
             <input
                 type="file"

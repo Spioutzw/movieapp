@@ -73,6 +73,17 @@
       grid-template-columns: repeat(5, 0.1fr);
       gap: 40px;
     }
-  
+  }
+
+  @media screen and (min-width: 2000px) {
+
+    .containerMovie {
+      grid-template-columns: repeat(6, 0.1fr);
+    }
+
+    .containerSeries {
+      grid-template-columns: repeat(6, 0.1fr);
+    }
     
   }
+    

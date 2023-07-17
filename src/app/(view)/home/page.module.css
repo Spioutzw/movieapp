@@ -114,6 +114,20 @@
   }
   
 }
+
+@media screen and (min-width: 2000px) {
+
+  .containerMovieTrending {
+    width: 1800px;
+  }
+
+  .containerRecommended {
+    grid-template-columns: repeat(6, 0.1fr);
+  }
+  
+}
+  
+
   
 
   

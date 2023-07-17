@@ -63,6 +63,10 @@ function page() {
   }
 
   useEffect(() => {
+    //check if user is logged in
+    if (!userData) {
+      push('/login')
+    }
     fetchData()
   }, [])
 
