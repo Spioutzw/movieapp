@@ -8,6 +8,11 @@ import style from './page.module.css'
 function page() {
 
     const [series, setSeries] = useState([]);
+    const [searchQuery, setSearchQuery] = useState('');
+
+    const filteredSeries = series.filter((serie) =>
+        serie.title.toLowerCase().includes(searchQuery.toLowerCase())
+    );
 
     const fetchData = async () => {
         await fetch('/api/AllSeries/', {
@@ -27,23 +32,26 @@ function page() {
     }, [])
 
     return (
-        <>
+        <div className={style.container}>
             <NavBar />
-            <SearchBar />
+            <div>
+                <SearchBar onSearch={setSearchQuery} placeholder={"Search for TV series"} />
+                <div >
 
-            <h3 className={style.h3}>Series</h3>
+                    <h3 className={style.h3}>Series</h3>
 
-            <div className={style.containerSeries}>
-                {series.map((serie) => (
-                    <Card
-                        fetch={fetchData}
-                        key={serie.id}
-                        film={serie}
-                        onClick={() => push(`/movie/${movie.id}`)}
-                    />
-                ))}
+                    <div className={style.containerSeries}>
+                        {filteredSeries.map((serie) => (
+                            <Card
+                                fetch={fetchData}
+                                key={serie.id}
+                                film={serie}
+                            />
+                        ))}
+                    </div>
+                </div>
             </div>
-        </>
+        </div>
     )
 }
 

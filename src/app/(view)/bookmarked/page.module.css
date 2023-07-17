@@ -22,3 +22,57 @@
     color: white;
     margin: 24px 16px;
   }
+
+  @media screen and (min-width: 600px) {
+  
+    .containerMovie {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .containerSeries {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+
+  @media screen and (min-width: 1000px) {
+    
+   .container {
+      display: grid;
+      grid-template-columns: auto 1fr;
+   }
+    
+  }
+
+  
+  @media screen and (min-width: 1300px) {
+
+    .containerMovie {
+      grid-template-columns: repeat(4, 0.1fr);
+      gap: 40px;
+    }
+
+    .containerSeries {
+      grid-template-columns: repeat(4, 0.1fr);
+      gap: 40px;
+    }
+    
+  }
+  
+ 
+
+  @media screen and (min-width: 1715px) {
+  
+    .containerMovie {
+      grid-template-columns: repeat(5, 0.1fr);
+      gap: 40px;
+    }
+
+
+    .containerSeries {
+      grid-template-columns: repeat(5, 0.1fr);
+      gap: 40px;
+    }
+  
+    
+  }

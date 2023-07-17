@@ -1,12 +1,14 @@
 import Image from 'next/image'
 import React, { useState } from 'react'
 import style from './Card.module.css'
+import { useRouter } from 'next/navigation';
 
 function Card(props) {
 
 
 
     const [movie, setMovies] = useState(props.film);
+    const {push} = useRouter();
 
     async function updateBookmarkStatus(filmId, newBookmarkStatus) {
         try {
@@ -26,7 +28,8 @@ function Card(props) {
 
       }
 
-    function handleBookmarkClick(filmId, newBookmarkStatus) {
+    function handleBookmarkClick(event,filmId, newBookmarkStatus) {
+        event.stop
         updateBookmarkStatus(filmId, newBookmarkStatus)
           .then(() => {
             console.log("Bookmark status updated in database");
@@ -44,7 +47,6 @@ function Card(props) {
       }
 
 
-    console.log(props,'props');
     return (
         <div className={style.movie}>
             <div className={style.containerImage}>
@@ -58,7 +60,7 @@ function Card(props) {
                     <span>{movie.category}</span>
                     <div className={style.rating}><span>{movie.rating}</span></div>
                 </div>
-                <h3>{movie.title}</h3>
+                <h3 className={style.h3} onClick={() => push(`/InfoSerieFilm/${movie.id}`)}>{movie.title}</h3>
             </div>
         </div>
     )

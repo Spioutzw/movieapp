@@ -8,8 +8,13 @@ import style from './page.module.css'
 function page() {
 
     const [movies, setMovies] = useState([]);
-    const moviesOnly = movies.filter((movie) => movie.category === "Movie");
-    const seriesOnly = movies.filter((movie) => movie.category === "Series");
+    const [searchQuery, setSearchQuery] = useState('');
+
+    const filteredMovies = movies.filter((movie) =>
+        movie.title.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    const moviesOnly = filteredMovies.filter((movie) => movie.category === "Movie");
+    const seriesOnly = filteredMovies.filter((movie) => movie.category === "TV Series");
 
     const fetchData = async () => {
         await fetch('/api/AllBookMarked/', {
@@ -29,36 +34,36 @@ function page() {
     }, [])
 
     return (
-        <>
+        <div className={style.container}>
             <NavBar />
-            <SearchBar />
+            <div>
+                <SearchBar onSearch={setSearchQuery} placeholder={"Search for bookmarked shows"} />
+                <div >
+                    <h3 className={style.h3}>Bookmarked Movies</h3>
+                    <div className={style.containerMovie}>
+                        {moviesOnly.map((movie) => (
+                            <Card
+                                fetch={fetchData}
+                                key={movie.id}
+                                film={movie}
+                            />
+                        ))}
+                    </div>
 
-            <h3 className={style.h3}>Bookmarked Movies</h3>
+                    <h3 className={style.h3}>Bookmarked Series</h3>
 
-            <div className={style.containerMovie}>
-                {moviesOnly.map((movie) => (
-                    <Card
-                        fetch={fetchData}
-                        key={movie.id}
-                        film={movie}
-                        onClick={() => push(`/movie/${movie.id}`)}
-                    />
-                ))}
+                    <div className={style.containerSeries}>
+                        {seriesOnly.map((serie) => (
+                            <Card
+                                fetch={fetchData}
+                                key={serie.id}
+                                film={serie}
+                            />
+                        ))}
+                    </div>
+                </div>
             </div>
-
-            <h3 className={style.h3}>Bookmarked Series</h3>
-
-            <div className={style.containerSeries}>
-                {seriesOnly.map((serie) => (
-                    <Card
-                        fetch={fetchData}
-                        key={serie.id}
-                        film={serie}
-                        onClick={() => push(`/movie/${movie.id}`)}
-                    />
-                ))}
-            </div>
-        </>
+        </div>
     )
 }
 
