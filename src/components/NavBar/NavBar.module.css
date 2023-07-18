@@ -20,9 +20,15 @@
     cursor: pointer;
 }
 
+.profilePic {
+    display: flex;
+    flex-direction: column;
+}
+
 .profilePic img {
     border-radius: 25px;
     border: 1px solid #FFFFFF;
+    margin: 5px;
 }
 
 

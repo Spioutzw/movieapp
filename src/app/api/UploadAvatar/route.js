@@ -1,6 +1,4 @@
-import multer from 'multer'
 import { NextResponse } from 'next/server'
-import path from 'path'
 import fs from 'fs'
 import { v4 as uuidv4 } from 'uuid'
 import stream from 'stream/promises'

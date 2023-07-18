@@ -27,7 +27,7 @@ function Form({ title, Message, LoginOrRegister, inputs, textbutton, link, error
         {inputs.map(input => (
           <div key={input.name}>
             <input className={style.input} placeholder={input.placeholder} {...register(input.name)} type={input.type} />
-            <p>{errors[input.name]?.message}</p>
+            <p className={style.error}>{errors[input.name]?.message}</p>
           </div>
         ))}
         <Button text={textbutton}  />

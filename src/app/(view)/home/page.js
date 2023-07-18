@@ -2,11 +2,13 @@
 
 import NavBar from '@/components/NavBar/NavBar'
 import SearchBar from '@/components/SearchBar/SearchBar'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import CardTrending from '@/components/Card/CardTrending'
 import style from './page.module.css'
 import { useRouter } from 'next/navigation'
 import Card from '@/components/Card/Card'
+import { useSession } from 'next-auth/react'
+import { signOut } from 'next-auth/react'
 
 
 
@@ -14,12 +16,13 @@ import Card from '@/components/Card/Card'
 function page() {
 
 
+  const { data: session, status } = useSession()
   const [movies, setMovies] = useState([]);
   const [trendingMovies, setTrendingMovies] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
 
   const { push } = useRouter();
-  const userData = JSON.parse(localStorage.getItem('user'));
+
 
   const filteredMovies = movies.filter((movie) =>
     movie.title.toLowerCase().includes(searchQuery.toLowerCase())
@@ -28,13 +31,6 @@ function page() {
   const filteredTrendingMovies = trendingMovies.filter((movie) =>
     movie.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
-
-
-  const handleLogout = () => {
-    localStorage.removeItem('user');
-    window.location.reload();
-  }
-
 
   const fetchData = async () => {
     await fetch('/api/TrendingMovie/', {
@@ -63,12 +59,19 @@ function page() {
   }
 
   useEffect(() => {
-    //check if user is logged in
-    if (!userData) {
-      push('/login')
-    }
     fetchData()
   }, [])
+
+
+  console.log(session, 'session');
+
+  if (status === 'loading') {
+    return <div>loading...</div>
+  } if (status === 'unauthenticated') {
+    push('/login')
+  }
+
+  
 
   return (
     <div className={style.container}>
@@ -78,7 +81,7 @@ function page() {
         <div>
           <h3 className={style.h3}>Trending</h3>
           <div className={style.containerMovieTrending}>
-            {filteredTrendingMovies.map((movie, id) => (
+            {filteredTrendingMovies.map((movie) => (
               <CardTrending fetch={fetchData} key={movie.id} film={movie} />
             ))}
           </div>
@@ -88,8 +91,6 @@ function page() {
               <Card fetch={fetchData} key={movie.id} film={movie} />
             ))}
           </div>
-          <div>Salut {userData?.email}</div>
-          <button onClick={handleLogout}>Logout</button>
         </div>
       </div>
     </div>
