@@ -6,7 +6,7 @@ import prisma from '@/app/libs/prismadb';
 export async function POST(req) {
 
 
-    const { email, password } = await req.json();
+    const { email, password } = await req.text();
 
     console.log(email, password, 'email, password')
 
