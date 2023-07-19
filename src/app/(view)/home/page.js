@@ -22,6 +22,19 @@ function page() {
 
   const { push } = useRouter();
 
+  function handleUpdateMovies(filmId, newBookmarkStatus) {
+  
+    setMovies((prevState) =>
+      prevState.map((movie) =>
+        movie.id === filmId ? { ...movie, isBookmarked: newBookmarkStatus } : movie
+      )
+    );
+    setTrendingMovies((prevState) =>
+      prevState.map((movie) =>
+        movie.id === filmId ? { ...movie, isBookmarked: newBookmarkStatus } : movie
+      )
+    );
+  }
 
   const filteredMovies = movies.filter((movie) =>
     movie.title.toLowerCase().includes(searchQuery.toLowerCase())
@@ -40,7 +53,7 @@ function page() {
     })
       .then((res) => res.json())
       .then((data) => { setTrendingMovies(data) })
-      .catch((err) => console.log(err))
+      .catch((err) => { throw new Error(err) })
       .finally(() => console.log('done'))
 
 
@@ -52,7 +65,7 @@ function page() {
     })
       .then((res) => res.json())
       .then((data) => { setMovies(data) })
-      .catch((err) => console.log(err))
+      .catch((err) =>{throw new Error(err)})
       .finally(() => console.log('done'))
 
   }
@@ -61,8 +74,6 @@ function page() {
     fetchData()
   }, [])
 
-
-  console.log(session, 'session');
 
   if (status === 'loading') {
     return <div>loading...</div>
@@ -81,13 +92,13 @@ function page() {
           <h3 className={style.h3}>Trending</h3>
           <div className={style.containerMovieTrending}>
             {filteredTrendingMovies.map((movie) => (
-              <CardTrending fetch={fetchData} key={movie.id} film={movie} />
+              <CardTrending onUpdateMovies={handleUpdateMovies} fetch={fetchData} key={movie.id} film={movie} />
             ))}
           </div>
           <h3 className={style.h3}>Recommended for you</h3>
           <div className={style.containerRecommended}>
             {filteredMovies.map((movie, id) => (
-              <Card fetch={fetchData} key={movie.id} film={movie} />
+              <Card onUpdateMovies={handleUpdateMovies} fetch={fetchData} key={movie.id} film={movie} />
             ))}
           </div>
         </div>

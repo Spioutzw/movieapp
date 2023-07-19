@@ -16,7 +16,6 @@ export async function POST(req) {
         return NextResponse.json({ message: 'email already exists' }, { status: 400 })
     } else {
         // hash password
-        console.log('tata');
         const hashedPassword = await bcrypt.hash(password, 10);
 
         const userFromDb = await prisma.user.create({
@@ -25,7 +24,6 @@ export async function POST(req) {
                 password: hashedPassword
             }
         });
-        console.log(userFromDb);
         
         return NextResponse.json(userFromDb);
     }

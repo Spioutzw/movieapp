@@ -28,9 +28,8 @@ function Login() {
 
   const handleSubmit = async (data) => {
 
-    console.log(data)
 
-    const {email , password} = data
+    const {email , password} = data;
     const response = await signIn('credentials', {
       email,
       password,

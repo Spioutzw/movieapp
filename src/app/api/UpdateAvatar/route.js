@@ -8,7 +8,6 @@ export async function POST(req, res) {
     const body = await req.json()
     const { email, avatar } = body
 
-    console.log(body,'body')
     // Update the user's avatar in the database using Prisma
     await prisma.user.update({
       where: { email },

@@ -1,14 +1,18 @@
 import Image from 'next/image'
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import style from './Card.module.css'
 import { useRouter } from 'next/navigation';
 
 function Card(props) {
 
 
-
     const [movie, setMovies] = useState(props.film);
     const {push} = useRouter();
+
+    useEffect(() => {
+        setMovies(props.film)
+    }, [props.film])
+
 
     async function updateBookmarkStatus(filmId, newBookmarkStatus) {
         try {
@@ -20,7 +24,7 @@ function Card(props) {
             body: JSON.stringify({ isBookmarked: newBookmarkStatus , filmId: filmId }),
           });
           if (!response.ok) {
-            console.log(response)
+            throw new Error("Error updating bookmark status in database");
           }
         } catch (error) {
             console.error(error,'error updateBookmarkStatus');
@@ -28,8 +32,8 @@ function Card(props) {
 
       }
 
-    function handleBookmarkClick(event,filmId, newBookmarkStatus) {
-        event.stop
+    function handleBookmarkClick(filmId, newBookmarkStatus) {
+        
         updateBookmarkStatus(filmId, newBookmarkStatus)
           .then(() => {
             console.log("Bookmark status updated in database");
@@ -38,6 +42,7 @@ function Card(props) {
                     ...prevState,
                     isBookmarked: newBookmarkStatus,
                     }));
+                    props.onUpdateMovies(filmId, newBookmarkStatus);
                     props.fetch()
           })
           .catch((error) => {

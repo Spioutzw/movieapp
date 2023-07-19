@@ -23,7 +23,7 @@ function page() {
         })
             .then((res) => res.json())
             .then((data) => { setMovies(data) })
-            .catch((err) => console.log(err))
+            .catch((err) => { throw new Error(err)})
             .finally(() => console.log('done'))
     }
 

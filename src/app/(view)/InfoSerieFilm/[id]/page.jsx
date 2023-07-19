@@ -19,7 +19,7 @@ function page({params}) {
 
             .then((res) => res.json())
             .then((data) => setinfoMovieOrSerie(data))
-            .catch((err) => console.log(err))
+            .catch((err) => {throw new Error(err)})
             .finally(() => console.log('done'))
     }
     
@@ -37,7 +37,6 @@ function page({params}) {
           )
             .then((response) => response.json())
             .then((data) => {
-              console.log(data,'data');
                 setTMDbINFO(data);
             });
     }
@@ -47,10 +46,6 @@ function page({params}) {
         fetchInfo()
     }, [])
 
-    console.log(infoMovieOrSerie)
-    console.log(TMDbINFO,'TMDbINFO')
-    console.log(process.env.API_KEY_TMDB,'process.env.API_KEY_TMDB')
-    
   return (
     <div>
         {infoMovieOrSerie.title && <CardInfo movie={infoMovieOrSerie} />}

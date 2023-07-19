@@ -14,8 +14,6 @@ export async function POST(request) {
         const data = await request.formData()
         const file = data.get('file')
         const buffer = await file.arrayBuffer()
-
-        console.log(file, 'file');
         const result = await cloudinary.uploader.upload(`data:${file.type};base64,${Buffer.from(buffer).toString('base64')}`)
         const imageUrl = result.secure_url
 

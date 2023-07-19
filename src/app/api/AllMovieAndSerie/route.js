@@ -14,10 +14,6 @@ export async function PATCH(req) {
     const body = await req.json();
     const { filmId, isBookmarked } = body;
    
-    console.log(body,'req.body')
-    console.log(isBookmarked,'isBookmarked');
-    console.log(filmId,'filmId');
-
     // Update bookmark status in database
     await prisma.media.update({
         where: { id: filmId },

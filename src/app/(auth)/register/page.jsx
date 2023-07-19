@@ -39,7 +39,6 @@ function Register() {
         }
     }, []);
 
-    console.log(session);
 
     const handleSubmit = async (data) => {
         const response = await fetch('/api/register', {

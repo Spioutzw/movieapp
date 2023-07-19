@@ -26,13 +26,11 @@ function NavBar() {
 
         // Get the selected file from the file input element
         const file = event.target.files[0]
-        console.log(URL.createObjectURL(file));
         if (file) {
             // Create a FormData object to hold the selected file
             const formData = new FormData()
             formData.append('file', file)
             // Upload the selected file to your server
-            console.log(formData.get('file'), 'formData');
             const res = await fetch('/api/UploadAvatar', {
                 method: 'POST',
                 body: formData
@@ -40,8 +38,6 @@ function NavBar() {
             // Get the URL of the uploaded file from the response
             const newAvatar = await res.json()
             setAvatar(newAvatar.url)
-
-            console.log(newAvatar, 'newAvatar');
             // Update the avatar state with the new image URL
 
             // Call the /api/updateAvatar API route to update the user's avatar in the database
@@ -52,18 +48,11 @@ function NavBar() {
                     email: session.token.email,
                     avatar: newAvatar.url
                 })
-            }).then(res => res.json())
-                .then(data => {
-                    console.log(data, 'data');
-                })
-                .catch(err => {
-                    console.log(err, 'err');
-                })
+            })
 
         }
     }
 
-    console.log(avatar, 'avatar');
 
     return (
         <nav className={style.navigation}>
