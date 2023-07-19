@@ -13,7 +13,7 @@ function NavBar() {
 
 
     const { data: session, status } = useSession()
-    const [avatar, setAvatar] = useState(session?.user?.avatar)
+    const [avatar, setAvatar] = useState(session?.user?.avatar || '/assets/user.png')
 
     const fileInputRef = useRef(null)
 

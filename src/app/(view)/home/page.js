@@ -8,7 +8,6 @@ import style from './page.module.css'
 import { useRouter } from 'next/navigation'
 import Card from '@/components/Card/Card'
 import { useSession } from 'next-auth/react'
-import { signOut } from 'next-auth/react'
 
 
 
