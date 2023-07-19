@@ -13,20 +13,14 @@ export async function POST(request) {
     try {
         const data = await request.formData()
         const file = data.get('file')
-        const result = await new Promise((resolve, reject) => {
-            const stream = cloudinary.uploader.upload_stream((error, result) => {
-                if (error) {
-                    reject(error)
-                } else {
-                    resolve(result)
-                }
-            })
-            file.stream.pipe(stream)
-        })
+        const buffer = await file.arrayBuffer()
 
+        console.log(file, 'file');
+        const result = await cloudinary.uploader.upload(`data:${file.type};base64,${Buffer.from(buffer).toString('base64')}`)
         const imageUrl = result.secure_url
 
         return NextResponse.json({ url: imageUrl })
+
     } catch (error) {
         // Handle the error here
         console.error(error)
