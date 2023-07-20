@@ -17,7 +17,6 @@ function page() {
 
   const { data: session, status } = useSession()
   const [movies, setMovies] = useState([]);
-  const [trendingMovies, setTrendingMovies] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
 
   const { push } = useRouter();
@@ -29,35 +28,15 @@ function page() {
         movie.id === filmId ? { ...movie, isBookmarked: newBookmarkStatus } : movie
       )
     );
-    setTrendingMovies((prevState) =>
-      prevState.map((movie) =>
-        movie.id === filmId ? { ...movie, isBookmarked: newBookmarkStatus } : movie
-      )
-    );
+  
   }
-
   const filteredMovies = movies.filter((movie) =>
     movie.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const filteredTrendingMovies = trendingMovies.filter((movie) =>
-    movie.title.toLowerCase().includes(searchQuery.toLowerCase())
-  );
 
   const fetchData = async () => {
-    await fetch('/api/TrendingMovie/', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      cache: 'no-store'
-    })
-      .then((res) => res.json())
-      .then((data) => { setTrendingMovies(data) })
-      .catch((err) => { throw new Error(err) })
-      .finally(() => console.log('done'))
-
-
+    
     await fetch('/api/AllMovieAndSerie/', {
       method: 'GET',
       headers: {
@@ -92,7 +71,7 @@ function page() {
         <div>
           <h3 className={style.h3}>Trending</h3>
           <div className={style.containerMovieTrending}>
-            {filteredTrendingMovies.map((movie) => (
+            {filteredMovies.filter(movie => movie.isTrending === true).map((movie) => (
               <CardTrending onUpdateMovies={handleUpdateMovies} fetch={fetchData} key={movie.id} film={movie} />
             ))}
           </div>
