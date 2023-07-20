@@ -50,6 +50,7 @@ function page() {
       headers: {
         'Content-Type': 'application/json',
       },
+      cache: 'no-store'
     })
       .then((res) => res.json())
       .then((data) => { setTrendingMovies(data) })
