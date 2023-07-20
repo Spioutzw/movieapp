@@ -21,15 +21,7 @@ function page() {
 
   const { push } = useRouter();
 
-  function handleUpdateMovies(filmId, newBookmarkStatus) {
-  
-    setMovies((prevState) =>
-      prevState.map((movie) =>
-        movie.id === filmId ? { ...movie, isBookmarked: newBookmarkStatus } : movie
-      )
-    );
-  
-  }
+
   const filteredMovies = movies.filter((movie) =>
     movie.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
@@ -72,13 +64,13 @@ function page() {
           <h3 className={style.h3}>Trending</h3>
           <div className={style.containerMovieTrending}>
             {filteredMovies.filter(movie => movie.isTrending === true).map((movie) => (
-              <CardTrending onUpdateMovies={handleUpdateMovies} fetch={fetchData} key={movie.id} film={movie} />
+              <CardTrending fetch={fetchData} key={movie.id} film={movie} />
             ))}
           </div>
           <h3 className={style.h3}>Recommended for you</h3>
           <div className={style.containerRecommended}>
             {filteredMovies.map((movie, id) => (
-              <Card onUpdateMovies={handleUpdateMovies} fetch={fetchData} key={movie.id} film={movie} />
+              <Card fetch={fetchData} key={movie.id} film={movie} />
             ))}
           </div>
         </div>

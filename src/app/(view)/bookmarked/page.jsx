@@ -16,6 +16,16 @@ function page() {
     const moviesOnly = filteredMovies.filter((movie) => movie.category === "Movie");
     const seriesOnly = filteredMovies.filter((movie) => movie.category === "TV Series");
 
+    function handleUpdateMovies(filmId, newBookmarkStatus) {
+  
+        setMovies((prevState) =>
+          prevState.map((movie) =>
+            movie.id === filmId ? { ...movie, isBookmarked: newBookmarkStatus } : movie
+          )
+        );
+      
+      }
+
     const fetchData = async () => {
         await fetch('/api/AllBookMarked/', {
             method: 'GET',
@@ -46,6 +56,8 @@ function page() {
                                 fetch={fetchData}
                                 key={movie.id}
                                 film={movie}
+                                onUpdateMovies={handleUpdateMovies}
+                                isBookmarkedPage={true}
                             />
                         ))}
                     </div>
@@ -58,6 +70,8 @@ function page() {
                                 fetch={fetchData}
                                 key={serie.id}
                                 film={serie}
+                                onUpdateMovies={handleUpdateMovies}
+                                isBookmarkedPage={true}
                             />
                         ))}
                     </div>

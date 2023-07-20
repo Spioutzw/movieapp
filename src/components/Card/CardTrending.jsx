@@ -42,7 +42,6 @@ function CardTrending(props) {
           ...prevState,
           isBookmarked: newBookmarkStatus,
         }));
-        props.onUpdateMovies(filmId, newBookmarkStatus);
         props.fetch()
       })
       .catch((error) => {
