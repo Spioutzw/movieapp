@@ -9,8 +9,6 @@ import Link from 'next/link';
 function Form({ title, Message, LoginOrRegister, inputs, textbutton, link, errorBack, handleSubmitLoginOrRegister, }) {
 
 
-  const [borderColor, setBorderColor] = useState('inherit');
-
   const schema = yup.object().shape(inputs.reduce((acc, input) => {
     acc[input.name] = input.validation;
     return acc;
@@ -22,13 +20,8 @@ function Form({ title, Message, LoginOrRegister, inputs, textbutton, link, error
     handleSubmitLoginOrRegister(data);
   };
 
-  useEffect(() => {
-    if (Object.keys(errors).length > 0) {
-      setBorderColor('red');
-    } else {
-      setBorderColor('inherit');
-    }
-  }, [errors]);
+  const disabled = Object.keys(errors).length > 0;
+
 
 
   return (
@@ -37,11 +30,11 @@ function Form({ title, Message, LoginOrRegister, inputs, textbutton, link, error
       <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
         {inputs.map(input => (
           <div key={input.name}>
-            <input style={{borderColor : borderColor }} className={style.input} placeholder={input.placeholder} {...register(input.name)} type={input.type} />
+            <input style={{ borderColor: errors[input.name] ? 'red' : 'inherit' }} className={style.input} placeholder={input.placeholder} {...register(input.name)} type={input.type} />
             <p className={style.error}>{errors[input.name]?.message}</p>
           </div>
         ))}
-        <Button error={{errorBack,errors}} text={textbutton}  />
+        <Button error={errors} text={textbutton} disabled={disabled}  />
         {errorBack && <p className={style.error}>{errorBack}</p>}
         <div className={style.containerPSpan}>
           <p className={style.p}>{Message}</p> <Link href={link} ><span className={style.span}> &nbsp; {LoginOrRegister}</span></Link>

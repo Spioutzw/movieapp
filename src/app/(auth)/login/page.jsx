@@ -65,6 +65,7 @@ function Login() {
         link={'/register'}
         errorBack={errorBack}
         handleSubmitLoginOrRegister={handleSubmit}
+        clearError={() => setErrorBack(null)}
       />
   )
 }
