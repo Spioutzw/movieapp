@@ -22,7 +22,7 @@
 
 .profilePic {
     display: flex;
-    flex-direction: column;
+    
 }
 
 .profilePic img {
@@ -57,6 +57,7 @@
     }
 
     .profilePic{
+        flex-direction: column;
         margin-top: auto;
         margin-bottom: 32px;
     }

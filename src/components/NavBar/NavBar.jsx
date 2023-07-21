@@ -54,10 +54,10 @@ function NavBar() {
     }
 
     useEffect(() => {
-        if (session) {
-            setAvatar(session.user.avatar)
+        if (session && session.user.avatar) {
+          setAvatar(session.user.avatar);
         }
-    }, [session])
+      }, [session]);
 
 
     return (
@@ -73,7 +73,7 @@ function NavBar() {
             </div>
             
             <div className={style.profilePic} >
-                <Image className={style.avatar} onClick={() => signOut()} src="/assets/logout.svg" alt="logout" width={16} height={16} />
+                <Image className={style.avatar} onClick={() => signOut()} src="/assets/logout.svg" alt="logout" width={24} height={24} />
                 <Image className={style.avatar} onClick={handleAvatarClick} src={avatar} alt="Profile Picture" width={24} height={24} />
             </div>
             <input

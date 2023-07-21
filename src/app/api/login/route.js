@@ -16,12 +16,17 @@ export async function POST(req) {
 
     // check password 
 
+    
+
     if (!user) {
         return NextResponse.json({ message: 'email not found' }, { status: 400 })
 
     } else {
 
+        
+
         const validPassword = await bcrypt.compare(password, user.password);
+        
 
         if (!validPassword) {
             return NextResponse.json({ message: 'password not valid' }, { status: 400 })

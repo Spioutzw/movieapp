@@ -67,3 +67,28 @@
 .error {
     color :#FC4747;
 }
+
+.passwordInputWrapper {
+    /* Styles pour le wrapper du champ de mot de passe et du bouton de bascule */
+    display: flex;
+    align-items: center;
+    position: relative; /* Permet de positionner le bouton par rapport à l'input */
+  }
+  
+  .showHideButton {
+    /* Styles pour le bouton de bascule (afficher/masquer mot de passe) */
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  
+  .showHideIcon {
+    /* Styles pour l'icône SVG */
+    width: 20px;
+    height: 20px;
+    fill: #444; /* Couleur de l'icône */
+  }
