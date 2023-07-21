@@ -9,7 +9,5 @@ export async function GET() {
         }
     });
 
-    console.log(trendingFilms);
-
     return NextResponse.json(trendingFilms);
 }
