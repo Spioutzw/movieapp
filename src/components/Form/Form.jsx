@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
@@ -8,6 +8,8 @@ import Link from 'next/link';
 
 function Form({ title, Message, LoginOrRegister, inputs, textbutton, link, errorBack, handleSubmitLoginOrRegister, }) {
 
+
+  const [borderColor, setBorderColor] = useState('inherit');
 
   const schema = yup.object().shape(inputs.reduce((acc, input) => {
     acc[input.name] = input.validation;
@@ -20,13 +22,23 @@ function Form({ title, Message, LoginOrRegister, inputs, textbutton, link, error
     handleSubmitLoginOrRegister(data);
   };
 
+  useEffect(() => {
+    if (Object.keys(errors).length > 0) {
+      setBorderColor('red');
+    } else {
+      setBorderColor('inherit');
+    }
+  }, [errors]);
+
+  console.log(errors);
+
   return (
     <div className={style.containerForm}>
       <h3 className={style.h3}>{title}</h3>
       <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
         {inputs.map(input => (
           <div key={input.name}>
-            <input className={style.input} placeholder={input.placeholder} {...register(input.name)} type={input.type} />
+            <input style={{borderColor : borderColor }} className={style.input} placeholder={input.placeholder} {...register(input.name)} type={input.type} />
             <p className={style.error}>{errors[input.name]?.message}</p>
           </div>
         ))}

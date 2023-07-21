@@ -27,6 +27,10 @@
     color: white;
 }
 
+.input {
+    color: white;
+}
+
 .input:placeholder-shown {
     padding-bottom: 17px;
     padding-left: 16px;

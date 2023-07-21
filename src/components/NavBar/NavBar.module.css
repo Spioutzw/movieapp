@@ -31,6 +31,9 @@
     margin: 5px;
 }
 
+.avatar {
+    cursor: pointer;
+}
 
 @media screen and (min-width: 1000px) {
     .navigation {

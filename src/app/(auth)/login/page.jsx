@@ -3,6 +3,7 @@ import Form from '@/components/Form/Form'
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation';
 import {getSession, signIn} from 'next-auth/react'
+import * as yup from "yup";
 
 
 const inputs = [
@@ -10,11 +11,14 @@ const inputs = [
     name: 'email',
     placeholder: 'Email',
     type: 'email',
+    validation : yup.string().email().required()
+
   },
   {
     name: 'password',
     placeholder: 'Mot de passe',
     type: 'password',
+    validation : yup.string().required()
   },
 
 ]
