@@ -6,7 +6,7 @@ import style from './Form.module.css';
 import Button from '../Button/Button';
 import Link from 'next/link';
 
-function Form({ title, Message, LoginOrRegister, inputs, textbutton, link, errorBack, handleSubmitLoginOrRegister, }) {
+function Form({ title, Message, LoginOrRegister, inputs, textbutton, link, errorBack, handleSubmitLoginOrRegister,clearError }) {
 
 
   const [showPassword, setShowPassword] = useState(false);
@@ -23,7 +23,6 @@ function Form({ title, Message, LoginOrRegister, inputs, textbutton, link, error
   };
 
   const disabled = Object.keys(errors).length > 0;
-
 
 
   return (
@@ -81,7 +80,7 @@ function Form({ title, Message, LoginOrRegister, inputs, textbutton, link, error
             <p className={style.error}>{errors[input.name]?.message}</p>
           </div>
         ))}
-        <Button error={errors} text={textbutton} disabled={disabled} />
+        <Button clear={clearError} error={errors} errorServer={errorBack}  text={textbutton} disabled={disabled} />
         {errorBack && <p className={style.error}>{errorBack}</p>}
         <div className={style.containerPSpan}>
           <p className={style.p}>{Message}</p> <Link href={link}><span className={style.span}>&nbsp; {LoginOrRegister}</span></Link>

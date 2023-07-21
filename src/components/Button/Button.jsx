@@ -1,24 +1,34 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import style from './Button.module.css';
 
-function Button({text, disabled, error}) {
+function Button({text, disabled, error, clear, errorServer}) {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleClick = () => {
+  const  handleClick = async () => {
     setIsLoading(true);
     // Check if there are any errors
     if (Object.keys(error).length > 0) {
       // If there are errors, reset the isLoading state to false
       setIsLoading(false);
-    } else {
-      // If there are no errors, simulate a successful form submission
-      // and reset the isLoading state after a delay
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 2000);
     }
   };
+
+
+  useEffect(() => {
+    // Check if errorServer is defined
+    if (errorServer) {
+      setIsLoading(false);
+      // Clear the server errors after a delay of 3 seconds
+      const timeoutId = setTimeout(() => {
+        clear();
+      }, 3000);
+      // Cleanup function to clear the timeout
+      return () => clearTimeout(timeoutId);
+    }
+  }, [errorServer, clear]);
+  
+  
   
 
   return (
