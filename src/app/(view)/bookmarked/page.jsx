@@ -16,6 +16,15 @@ function page() {
     const moviesOnly = filteredMovies.filter((movie) => movie.category === "Movie");
     const seriesOnly = filteredMovies.filter((movie) => movie.category === "TV Series");
 
+    if (status === 'loading') {
+        return <div>loading...</div>
+      } if (status === 'unauthenticated') {
+        push('/login')
+      }
+
+      const { data: session, status } = useSession()
+
+
     function handleUpdateMovies(filmId, newBookmarkStatus) {
   
         setMovies((prevState) =>

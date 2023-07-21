@@ -14,6 +14,16 @@ function page() {
         movie.title.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
+    const { data: session, status } = useSession()
+
+    if (status === 'loading') {
+        return <div>loading...</div>
+      } if (status === 'unauthenticated') {
+        push('/login')
+      }
+
+      const { data: session, status } = useSession()
+
     const fetchData = async () => {
         await fetch('/api/AllMovies/', {
             method: 'GET',
