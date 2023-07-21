@@ -28,7 +28,7 @@ function page() {
 
 
   const fetchData = async () => {
-    
+
     await fetch('/api/AllMovieAndSerie/', {
       method: 'GET',
       headers: {
@@ -37,23 +37,24 @@ function page() {
     })
       .then((res) => res.json())
       .then((data) => { setMovies(data) })
-      .catch((err) =>{throw new Error(err)})
+      .catch((err) => { throw new Error(err) })
       .finally(() => console.log('done'))
 
   }
 
   useEffect(() => {
+    if (!session) {
+      push('/login')
+    }
+
     fetchData()
+
   }, [])
 
 
-  if (status === 'loading') {
-    return <div>loading...</div>
-  } if (status === 'unauthenticated') {
-    push('/login')
-  }
 
-  
+
+
 
   return (
     <div className={style.container}>
@@ -77,7 +78,7 @@ function page() {
       </div>
     </div>
   );
-  
+
 }
 
 export default page

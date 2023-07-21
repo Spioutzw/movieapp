@@ -5,6 +5,7 @@ import SearchBar from '@/components/SearchBar/SearchBar';
 import React, { useEffect, useState } from 'react'
 import style from './page.module.css'
 import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 function page() {
 
@@ -20,14 +21,7 @@ function page() {
     const seriesOnly = filteredMovies.filter((movie) => movie.category === "TV Series");
 
     const { data: session, status } = useSession()
-
-    if (status === 'loading') {
-        return <div>loading...</div>
-      } if (status === 'unauthenticated') {
-        push('/login')
-      }
-
-     
+    const { push } = useRouter();
 
 
     function handleUpdateMovies(filmId, newBookmarkStatus) {
@@ -56,7 +50,13 @@ function page() {
     }
 
     useEffect(() => {
+
+        if(!session) {
+            push('/login')
+        }
+
         fetchData()
+        
     }, [])
 
     return (

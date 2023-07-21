@@ -5,11 +5,13 @@ import SearchBar from '@/components/SearchBar/SearchBar';
 import React, { useEffect, useState } from 'react'
 import style from './page.module.css'
 import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 function page() {
 
     const [series, setSeries] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
+    const { push } = useRouter();
 
     const filteredSeries = series.filter((serie) =>
         serie.title.toLowerCase().includes(searchQuery.toLowerCase())
@@ -17,12 +19,7 @@ function page() {
 
     const { data: session, status } = useSession()
 
-    if (status === 'loading') {
-        return <div>loading...</div>
-        } if (status === 'unauthenticated') {
-        push('/login')
-        }
-
+   
     const fetchData = async () => {
         await fetch('/api/AllSeries/', {
             method: 'GET',
@@ -37,7 +34,12 @@ function page() {
     }
 
     useEffect(() => {
+        
         fetchData()
+        if(!session) {
+            push('/login')
+        }
+    
     }, [])
 
     return (
