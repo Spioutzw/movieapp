@@ -16,7 +16,7 @@ function Form({ title, Message, LoginOrRegister, inputs, textbutton, link, error
     return acc;
   }, {}));
 
-  const { register, handleSubmit, formState: { errors } } = useForm({ resolver: yupResolver(schema) });
+  const { register, handleSubmit, formState: { errors } } = useForm({ resolver: yupResolver(schema), mode: 'onChange'  });
 
   const onSubmit = async (data) => {
     handleSubmitLoginOrRegister(data);
