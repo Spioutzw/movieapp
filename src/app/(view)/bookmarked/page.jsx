@@ -4,6 +4,7 @@ import NavBar from '@/components/NavBar/NavBar';
 import SearchBar from '@/components/SearchBar/SearchBar';
 import React, { useEffect, useState } from 'react'
 import style from './page.module.css'
+import { useSession } from 'next-auth/react';
 
 function page() {
 
@@ -14,7 +15,11 @@ function page() {
         movie.title.toLowerCase().includes(searchQuery.toLowerCase())
     );
     const moviesOnly = filteredMovies.filter((movie) => movie.category === "Movie");
+   
+   
     const seriesOnly = filteredMovies.filter((movie) => movie.category === "TV Series");
+
+    const { data: session, status } = useSession()
 
     if (status === 'loading') {
         return <div>loading...</div>
@@ -22,7 +27,7 @@ function page() {
         push('/login')
       }
 
-      const { data: session, status } = useSession()
+     
 
 
     function handleUpdateMovies(filmId, newBookmarkStatus) {

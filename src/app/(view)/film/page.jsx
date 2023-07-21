@@ -4,6 +4,7 @@ import NavBar from '@/components/NavBar/NavBar';
 import SearchBar from '@/components/SearchBar/SearchBar';
 import React, { useEffect, useState } from 'react'
 import style from './page.module.css'
+import { useSession } from 'next-auth/react';
 
 function page() {
 
@@ -22,7 +23,6 @@ function page() {
         push('/login')
       }
 
-      const { data: session, status } = useSession()
 
     const fetchData = async () => {
         await fetch('/api/AllMovies/', {

@@ -4,6 +4,7 @@ import NavBar from '@/components/NavBar/NavBar';
 import SearchBar from '@/components/SearchBar/SearchBar';
 import React, { useEffect, useState } from 'react'
 import style from './page.module.css'
+import { useSession } from 'next-auth/react';
 
 function page() {
 
@@ -13,6 +14,14 @@ function page() {
     const filteredSeries = series.filter((serie) =>
         serie.title.toLowerCase().includes(searchQuery.toLowerCase())
     );
+
+    const { data: session, status } = useSession()
+
+    if (status === 'loading') {
+        return <div>loading...</div>
+        } if (status === 'unauthenticated') {
+        push('/login')
+        }
 
     const fetchData = async () => {
         await fetch('/api/AllSeries/', {
