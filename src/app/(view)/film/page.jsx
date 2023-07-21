@@ -4,23 +4,16 @@ import NavBar from '@/components/NavBar/NavBar';
 import SearchBar from '@/components/SearchBar/SearchBar';
 import React, { useEffect, useState } from 'react'
 import style from './page.module.css'
-import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import { getSession } from 'next-auth/react';
 
-function page() {
+ function page() {
 
     const [movies, setMovies] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
-    const { push } = useRouter();
 
     const filteredMovies = movies.filter((movie) =>
         movie.title.toLowerCase().includes(searchQuery.toLowerCase())
     );
-
-    const { data: session, status } = useSession()
-
-    
-
 
     const fetchData = async () => {
         await fetch('/api/AllMovies/', {
@@ -36,9 +29,6 @@ function page() {
     }
 
     useEffect(() => {
-        if(!session) {
-            push('/login')
-        }
         fetchData()
     }, [])
 

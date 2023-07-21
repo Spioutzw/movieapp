@@ -14,18 +14,12 @@ import { useSession } from 'next-auth/react'
 
 function page() {
 
-
-  const { data: session, status } = useSession()
   const [movies, setMovies] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
-
-  const { push } = useRouter();
-
 
   const filteredMovies = movies.filter((movie) =>
     movie.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
-
 
   const fetchData = async () => {
 
@@ -34,27 +28,17 @@ function page() {
       headers: {
         'Content-Type': 'application/json',
       },
+      cache: 'no-cache',
     })
       .then((res) => res.json())
       .then((data) => { setMovies(data) })
       .catch((err) => { throw new Error(err) })
       .finally(() => console.log('done'))
-
   }
 
   useEffect(() => {
-    if (!session) {
-      push('/login')
-    }
-
     fetchData()
-
   }, [])
-
-
-
-
-
 
   return (
     <div className={style.container}>

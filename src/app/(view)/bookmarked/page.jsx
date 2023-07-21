@@ -4,8 +4,6 @@ import NavBar from '@/components/NavBar/NavBar';
 import SearchBar from '@/components/SearchBar/SearchBar';
 import React, { useEffect, useState } from 'react'
 import style from './page.module.css'
-import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
 
 function page() {
 
@@ -16,13 +14,7 @@ function page() {
         movie.title.toLowerCase().includes(searchQuery.toLowerCase())
     );
     const moviesOnly = filteredMovies.filter((movie) => movie.category === "Movie");
-   
-   
     const seriesOnly = filteredMovies.filter((movie) => movie.category === "TV Series");
-
-    const { data: session, status } = useSession()
-    const { push } = useRouter();
-
 
     function handleUpdateMovies(filmId, newBookmarkStatus) {
   
@@ -50,13 +42,7 @@ function page() {
     }
 
     useEffect(() => {
-
-        if(!session) {
-            push('/login')
-        }
-
         fetchData()
-        
     }, [])
 
     return (
