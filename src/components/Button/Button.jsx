@@ -7,6 +7,14 @@ function Button(props) {
 
   const handleClick = () => {
     setIsLoading(true);
+    if (props.error || props.errorBack) {
+      setIsLoading(false);
+    }
+    setTimeout(() => {
+      setIsLoading(false);
+    }
+      , 2000);
+      
   };
 
   return (

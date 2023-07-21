@@ -30,7 +30,6 @@ function Form({ title, Message, LoginOrRegister, inputs, textbutton, link, error
     }
   }, [errors]);
 
-  console.log(errors);
 
   return (
     <div className={style.containerForm}>
@@ -42,7 +41,7 @@ function Form({ title, Message, LoginOrRegister, inputs, textbutton, link, error
             <p className={style.error}>{errors[input.name]?.message}</p>
           </div>
         ))}
-        <Button text={textbutton}  />
+        <Button error={{errorBack,errors}} text={textbutton}  />
         {errorBack && <p className={style.error}>{errorBack}</p>}
         <div className={style.containerPSpan}>
           <p className={style.p}>{Message}</p> <Link href={link} ><span className={style.span}> &nbsp; {LoginOrRegister}</span></Link>
