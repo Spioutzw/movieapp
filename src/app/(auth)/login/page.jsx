@@ -32,7 +32,6 @@ function Login() {
 
   const handleSubmit = async (data) => {
 
-
     const {email , password} = data;
     const response = await signIn('credentials', {
       email,

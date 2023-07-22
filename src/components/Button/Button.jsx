@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import style from './Button.module.css';
 
-function Button({text, disabled, error, clear, errorServer}) {
+function Button({text, disabled, error, clear, errorServer, submit}) {
 
   const [isLoading, setIsLoading] = useState(false);
+
+  console.log(text, disabled, error, clear, errorServer,submit)
 
   const  handleClick = async () => {
     setIsLoading(true);
     // Check if there are any errors
     if (Object.keys(error).length > 0) {
       // If there are errors, reset the isLoading state to false
+      setIsLoading(false);
+    } else {
+      await submit();
       setIsLoading(false);
     }
   };

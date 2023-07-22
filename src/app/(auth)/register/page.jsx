@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from 'react'
 import * as yup from "yup";
 import Form from '@/components/Form/Form';
-import style from './page.module.css';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 
@@ -41,6 +40,7 @@ function Register() {
 
 
     const handleSubmit = async (data) => {
+     
         const response = await fetch('/api/register', {
           method: 'POST',
           headers: {
@@ -75,9 +75,9 @@ function Register() {
             textbutton={'Créer un compte'}
             inputs={inputs}
             link={'/login'}
-            handleSubmit={handleSubmit}
             errorBack={errorBack}
             handleSubmitLoginOrRegister={handleSubmit}
+            clearError={() => setErrorBack(null)}
         />
     )
 }

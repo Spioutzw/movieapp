@@ -80,7 +80,7 @@ function Form({ title, Message, LoginOrRegister, inputs, textbutton, link, error
             <p className={style.error}>{errors[input.name]?.message}</p>
           </div>
         ))}
-        <Button clear={clearError} error={errors} errorServer={errorBack}  text={textbutton} disabled={disabled} />
+        <Button submit={handleSubmit} clear={clearError} error={errors} errorServer={errorBack}  text={textbutton} disabled={disabled} />
         {errorBack && <p className={style.error}>{errorBack}</p>}
         <div className={style.containerPSpan}>
           <p className={style.p}>{Message}</p> <Link href={link}><span className={style.span}>&nbsp; {LoginOrRegister}</span></Link>
