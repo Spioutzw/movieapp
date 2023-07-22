@@ -4,8 +4,10 @@ import { NextResponse } from 'next/server';
 import prisma from '@/app/libs/prismadb';
 
 export async function POST(req) {
+    
 
     const { email, password } = await req.json();
+
 
     // find the user in the database with email 
     const user = await prisma.user.findUnique({
