@@ -1,26 +1,30 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import style from './Button.module.css';
 
-function Button({text, disabled, error, clear, errorServer, submit}) {
-
+function Button({ text, disabled, error, clear, errorServer, submit }) {
   const [isLoading, setIsLoading] = useState(false);
 
-  console.log(text, disabled, error, clear, errorServer,submit)
-
-  const  handleClick = async () => {
-    setIsLoading(true);
-    // Check if there are any errors
+  const handleClick = async () => {
+    // Check if there are any errors or server errors
+    
     if (Object.keys(error).length > 0) {
-      // If there are errors, reset the isLoading state to false
       setIsLoading(false);
-    } else {
+    }
+    setIsLoading(true);
+    
       await submit();
-      setIsLoading(false);
+    
+      console.error(error);
+        if (errorServer) {
+          setIsLoading(false);
+        
+    } else {
+      setIsLoading(true);
     }
   };
 
-
   useEffect(() => {
+    console.log('Component has re-rendered');
     // Check if errorServer is defined
     if (errorServer) {
       setIsLoading(false);
@@ -32,20 +36,25 @@ function Button({text, disabled, error, clear, errorServer, submit}) {
       return () => clearTimeout(timeoutId);
     }
   }, [errorServer, clear]);
-  
-  
-  
 
+
+console.log('isLoading:', isLoading);
   return (
-    <button disabled={disabled || isLoading} type='submit' onClick={handleClick} style={{
-      backgroundColor:isLoading ? 'white' : (Object.keys(error).length > 0 ) ? 'grey' : '#FC4747',
-      color: isLoading ? '#161D2F' : 'white',
-      cursor: (isLoading || Object.keys(error).length > 0) ? 'not-allowed' : 'pointer',
-    }}
-      className={style.Button}>
-      {isLoading ? "Loading ...." : text}
+    <button
+      disabled={disabled}
+      type='submit'
+      onClick={handleClick}
+      style={{
+        backgroundColor: isLoading ? 'white' : Object.keys(error).length > 0 ? 'grey' : '#FC4747',
+        color: isLoading ? '#161D2F' : 'white',
+        cursor: isLoading || Object.keys(error).length > 0 ? 'not-allowed' : 'pointer'
+      }}
+      className={style.Button}
+    >
+      
+      {isLoading ? 'Loading ....' : text}
     </button>
-  )
+  );
 }
 
-export default Button
+export default Button;

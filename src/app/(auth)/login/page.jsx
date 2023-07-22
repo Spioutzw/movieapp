@@ -33,11 +33,14 @@ function Login() {
   const handleSubmit = async (data) => {
 
     const {email , password} = data;
+    console.log('Calling signIn');
     const response = await signIn('credentials', {
       email,
       password,
       redirect: false,
     });
+
+    console.log('signIn response:', response);
   
     if (response.error) {
       // If there is an error, display an error message

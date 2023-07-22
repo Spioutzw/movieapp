@@ -19,6 +19,7 @@ function Form({ title, Message, LoginOrRegister, inputs, textbutton, link, error
   const { register, handleSubmit, formState: { errors } } = useForm({ resolver: yupResolver(schema), mode: 'onChange'  });
 
   const onSubmit = async (data) => {
+    console.log('Form submitted:', data);
     handleSubmitLoginOrRegister(data);
   };
 
@@ -28,7 +29,10 @@ function Form({ title, Message, LoginOrRegister, inputs, textbutton, link, error
   return (
     <div className={style.containerForm}>
       <h3 className={style.h3}>{title}</h3>
-      <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
+      <form className={style.form} onSubmit={handleSubmit((data) => {
+  console.log('Form submitted:', data);
+  onSubmit(data);
+})}>
         {inputs.map((input) => (
           <div key={input.name}>
             {input.type === 'password' ? (
