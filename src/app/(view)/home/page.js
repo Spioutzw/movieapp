@@ -5,56 +5,76 @@ import SearchBar from '@/components/SearchBar/SearchBar'
 import React, { useEffect, useState } from 'react'
 import CardTrending from '@/components/Card/CardTrending'
 import style from './page.module.css'
-import { useRouter } from 'next/navigation'
 import Card from '@/components/Card/Card'
-import { useSession } from 'next-auth/react'
+import { useSession } from 'next-auth/react';
+
 
 
 
 
 function page() {
 
-  const [movies, setMovies] = useState([]);
+  const [trendingMedia, setTrendingMedia] = useState([]);
+  const [popularMovies, setPopularMovies] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
 
-  const filteredMovies = movies.filter((movie) =>
+  const { data: session } = useSession();
+
+
+
+  const filteredTrendingMedia = trendingMedia.filter((movie) =>
     movie.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const fetchData = async () => {
+  const filteredMoviesPopular = popularMovies.filter((movie) =>
+    movie.title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
-    await fetch('/api/AllMovieAndSerie/', {
+
+  const fetchDataTrending = async () => {
+    await fetch(`https://api.themoviedb.org/3/trending/all/week?${process.env.NEXT_PUBLIC_API_KEY_TMDB}`,{
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },   
+    }).then((res) => res.json())
+    .then((data) => { setTrendingMedia(data) })
+    .catch((err) => { throw new Error(err) })
+    .finally(() => console.log('done')) ;
+  }
+
+  const fetchPopularTrending = async () => {
+    await fetch(`https://api.themoviedb.org/3/movie/popular?${process.env.NEXT_PUBLIC_API_KEY_TMDB}`,{
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },
-      cache: 'no-cache',
-    })
-      .then((res) => res.json())
-      .then((data) => { setMovies(data) })
-      .catch((err) => { throw new Error(err) })
-      .finally(() => console.log('done'))
+    }).then((res) => res.json())
+    .then((data) => { setPopularMovies(data) })
+    .catch((err) => { throw new Error(err) })
+    .finally(() => console.log('done')) ;
   }
-
+  
   useEffect(() => {
-    fetchData()
+    fetchDataTrending()
+    fetchPopularTrending()
   }, [])
 
   return (
     <div className={style.container}>
       <NavBar />
-      <div>
+      <div className={style.containerMedia}>
         <SearchBar onSearch={setSearchQuery} placeholder={"Search for movies or TV series"} />
         <div>
-          <h3 className={style.h3}>Trending</h3>
+          <h3 className={style.h3}>Trending Movie</h3>
           <div className={style.containerMovieTrending}>
-            {filteredMovies.filter(movie => movie.isTrending === true).map((movie) => (
+            {filteredTrendingMedia.filter(movie => movie.media_type === "movie").map((movie) => (
               <CardTrending fetch={fetchData} key={movie.id} film={movie} />
             ))}
           </div>
-          <h3 className={style.h3}>Recommended for you</h3>
+          <h3 className={style.h3}>Popular Movie</h3>
           <div className={style.containerRecommended}>
-            {filteredMovies.map((movie, id) => (
+            {filteredMoviesPopular.map((movie) => (
               <Card fetch={fetchData} key={movie.id} film={movie} />
             ))}
           </div>

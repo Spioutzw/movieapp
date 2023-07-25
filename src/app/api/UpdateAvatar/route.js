@@ -14,6 +14,7 @@ export async function POST(req, res) {
       data: { avatar }
     })
 
-    return NextResponse.json({ message: 'Avatar updated' })
+    return NextResponse.json({ message: 'Avatar updated' }, { status: 200 })
+    
  
 }

@@ -17,11 +17,11 @@ export async function POST(request) {
         const result = await cloudinary.uploader.upload(`data:${file.type};base64,${Buffer.from(buffer).toString('base64')}`)
         const imageUrl = result.secure_url
 
-        return NextResponse.json({ url: imageUrl })
+        return NextResponse.json({ url: imageUrl }, { status: 200 })
 
     } catch (error) {
         // Handle the error here
-        console.error(error)
+        return NextResponse.json({ message: error.message }, { status: 500 })
     }
 
 

@@ -37,12 +37,14 @@
 
 @media screen and (min-width: 1000px) {
     .navigation {
-        height: 960px;
-        width: 96px;
+        height: 83.3%;
+        width: 4rem;
         flex-direction: column;
         justify-content: unset;
         border-radius: 20px;
         margin: 32px 36px 0 32px;
+        position: fixed;
+        left: 0;
     }
 
     .menu {

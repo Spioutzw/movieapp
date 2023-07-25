@@ -35,7 +35,7 @@ import { getSession } from 'next-auth/react';
     return (
         <div className={style.container}>
             <NavBar />
-            <div>
+            <div className={style.containerMedia}>
                 <SearchBar onSearch={setSearchQuery} placeholder={"Search for movies"} />
 
                 <div>

@@ -1,12 +1,12 @@
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 import style from './CardTrending.module.css'
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 function CardTrending(props) {
 
   const [trending, setTrending] = useState(props.film);
-  const { push } = useRouter();
+
 
 
   useEffect(() => {
@@ -53,7 +53,7 @@ function CardTrending(props) {
   return (
     <div className={style.movie}>
       <div className={style.containerImage}>
-        <Image className={style.image} draggable={false} src={trending.thumbnail.trending.small} width={240} height={140} alt=" image d'un film " />
+        <Image className={style.image} draggable={false} src={trending.thumbnail.regular.large} fill alt=" image d'un film " />
         {trending.isBookmarked ? <Image className={style.bookmark} src={'/assets/icon-bookmark-full.svg'} alt='icon' height={32} width={32} onClick={() => handleBookmarkClick(trending.id, !trending.isBookmarked)} /> : <Image className={style.bookmark} src={'/assets/icon-bookmark-empty.svg'} alt='icon' height={32} width={32} onClick={() => handleBookmarkClick(trending.id, !trending.isBookmarked)} />}
       </div>
 
@@ -62,9 +62,8 @@ function CardTrending(props) {
           <span>{trending.year}</span>
           {trending.category === 'Movie' ? <Image src={'/assets/icon-category-movie.svg'} alt='icon' height={12} width={12} /> : <Image src={'/assets/icon-category-tv.svg'} alt='icon' height={12} width={12} />}
           <span>{trending.category}</span>
-          <div className={style.rating}><span>{trending.rating}</span></div>
         </div>
-        <h3 className={style.h3} onClick={() => push(`/InfoSerieFilm/${trending.id}`)}>{trending.title}</h3>
+        <Link href={`/InfoSerieFilm/${trending.id}`} ><h3 className={style.h3} >{trending.title}</h3></Link>
       </div>
     </div>
   )

@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react'
 
 function page({params}) {
 
+
     const [infoMovieOrSerie, setinfoMovieOrSerie] = useState({});
     const [TMDbINFO, setTMDbINFO] = useState({});
 
@@ -24,10 +25,11 @@ function page({params}) {
     }
     
     const fetchInfo = async () => {
+        const category = infoMovieOrSerie.category === 'TV Series' ? 'tv' : 'movie';
+        console.log(infoMovieOrSerie.title);
         await fetch(
-            `https://api.themoviedb.org/3/search/movie?api_key=${process.env.NEXT_PUBLIC_API_KEY_TMDB}&query=${encodeURIComponent(
-              infoMovieOrSerie.title
-            )}` , {
+            `https://api.themoviedb.org/3/search/${category}?api_key=${process.env.NEXT_PUBLIC_API_KEY_TMDB}&query=${encodeURIComponent(
+              infoMovieOrSerie.title)}&year=${infoMovieOrSerie.year}&language=en-US` , {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -37,18 +39,23 @@ function page({params}) {
           )
             .then((response) => response.json())
             .then((data) => {
-                setTMDbINFO(data);
+                console.log(data.results[0]);
+                setTMDbINFO(data.results[0]);
             });
     }
 
     useEffect(() => {
         fetchData()
-        fetchInfo()
-    }, [])
+        if(infoMovieOrSerie.title) {
+            fetchInfo()
+        }
+        console.log(TMDbINFO, 'TMDbINFO');
+       
+    }, [infoMovieOrSerie.title])
 
   return (
     <div>
-        {infoMovieOrSerie.title && <CardInfo movie={infoMovieOrSerie} />}
+        {infoMovieOrSerie.title && <CardInfo movie={infoMovieOrSerie} info={TMDbINFO}  />}
     </div>
   )
 }

@@ -17,55 +17,72 @@
   }
 
 
-  @media screen and (min-width: 600px) {
-  
+  @media screen and (min-width: 565px) {
     .containerMovie {
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(3, 0.1fr);
+    }
+  }
+  
+  @media screen and (min-width: 765px) {
+    .containerMovie {
+      grid-template-columns: repeat(4, 0.1fr);
+    }
+  }
+  
+  @media screen and (min-width: 935px) {
+    .containerMovie {
+      grid-template-columns: repeat(5, 0.1fr);
     }
   }
 
+
   @media screen and (min-width: 1000px) {
-    
-   .container {
+
+    .containerMedia {
+      margin-left: 8rem;
+    }
+
+    .containerMovie {
+      grid-template-columns: repeat(3, 0.1fr);
+      gap: 80px;
+    }
+    .container {
       display: grid;
       grid-template-columns: auto 1fr;
-   }
-    
+    }
   }
-
-
-  @media screen and (min-width: 1300px) {
+  
+  @media screen and (min-width: 1305px) {
 
     .containerMovie {
       grid-template-columns: repeat(4, 0.1fr);
-      gap: 40px;
     }
-    
-  }
-    
   
-  
- 
-
-@media screen and (min-width: 1715px) {
-  
-  .containerMovie {
-    grid-template-columns: repeat(5, 0.1fr);
-    gap: 40px;
-  }
-
-  
-}
-
-@media screen and (min-width: 2000px) {
-
-  
-
-  .containerMovie {
-    grid-template-columns: repeat(6, 0.1fr);
   }
   
-}
+  
+  @media screen and (min-width: 1750px) {
+  
+    .containerMedia {
+      margin-left: unset;
+    }
+   
+  
+    .containerMovie {
+      grid-template-columns: repeat(5, 0.1fr);
+    }
+  
+  }
+  
+  @media screen and (min-width: 2000px) {
+  
+   
+  
+    .containerMovie {
+      grid-template-columns: repeat(6, 0.1fr);
+    }
+  
+  }
   
   
 

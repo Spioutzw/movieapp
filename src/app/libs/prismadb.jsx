@@ -19,5 +19,19 @@ async function getAvatarurl(email) {
     return avatarUrl.avatar;
 }
 
+async function getIdUser(email)  {
+    const idUser = await prisma.user.findUnique({
+        where: {
+            email: email,
+        },
+        select: {
+            id: true,
+        },
+    });
+    return idUser.id;
+}
+
+
+export { getIdUser };
 export { getAvatarurl };
 

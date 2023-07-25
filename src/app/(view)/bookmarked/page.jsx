@@ -48,7 +48,7 @@ function page() {
     return (
         <div className={style.container}>
             <NavBar />
-            <div>
+            <div className={style.containerMedia}>
                 <SearchBar onSearch={setSearchQuery} placeholder={"Search for bookmarked shows"} />
                 <div >
                     <h3 className={style.h3}>Bookmarked Movies</h3>

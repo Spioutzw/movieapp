@@ -9,5 +9,5 @@ export async function GET() {
         }
     });
 
-    return NextResponse.json(trendingFilms);
+    return NextResponse.json(trendingFilms, { status: 200 });
 }

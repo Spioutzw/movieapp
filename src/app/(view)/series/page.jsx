@@ -35,7 +35,7 @@ function page() {
     return (
         <div className={style.container}>
             <NavBar />
-            <div>
+            <div className={style.containerMedia}>
                 <SearchBar onSearch={setSearchQuery} placeholder={"Search for TV series"} />
                 <div >
 
