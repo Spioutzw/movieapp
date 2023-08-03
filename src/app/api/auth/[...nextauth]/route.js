@@ -35,7 +35,6 @@ const authOptions = {
   ],
   pages: {
     signIn: '/login',
-    newUser: '/register',
   },
   session: {
     //database
@@ -51,6 +50,14 @@ const authOptions = {
       session.token = token;
       return session;
     },
+    async jwt({ token, user, account, profile, isNewUser }) {
+
+      if (account?.provider === 'credentials') {
+        token.id = user.id;
+      }
+      return token;
+    }
+
   }, secret: process.env.NEXTAUTH_SECRET,
 
 };

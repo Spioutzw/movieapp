@@ -12,7 +12,7 @@ const CardTrending = ({ media }) => {
     setTrending(media)
   }, [media])
 
-  console.log(trending, 'trending')
+  //console.log(trending, 'trending')
 
 
   const updateBookmarkStatus = async (filmId, newBookmarkStatus,category) => {
@@ -56,7 +56,7 @@ const CardTrending = ({ media }) => {
   return (
     <div className={style.movie}>
       <div className={style.containerImage}>
-        <Image className={style.image} draggable={false} src={urlPicture.large + trending.backdrop_path} fill alt=" image d'un film " />
+        <Image className={style.image} draggable={false} src={urlPicture.large + trending.backdrop_path} fill alt=" image d'un film " loading='lazy' />
         {trending.isBookmarked ? <Image className={style.bookmark} src={'/assets/icon-bookmark-full.svg'} alt='icon' height={32} width={32} onClick={() => handleBookmarkClick(trending.id, !trending.isBookmarked,trending.category)} /> : <Image className={style.bookmark} src={'/assets/icon-bookmark-empty.svg'} alt='icon' height={32} width={32} onClick={() => handleBookmarkClick(trending.id, !trending.isBookmarked,trending.category)} />}
       </div>
 

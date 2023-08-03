@@ -1,59 +1,13 @@
 'use client'
-import Card from '@/components/Card/Card';
-import NavBar from '@/components/NavBar/NavBar';
-import SearchBar from '@/components/SearchBar/SearchBar';
-import React, { useEffect, useState } from 'react'
-import style from './page.module.css'
-import { getSession } from 'next-auth/react';
 
- const page = () => {
+import React from 'react'
+import Genre from '@/components/Page/Genre/Genre';
 
-    const [movies, setMovies] = useState([]);
-    const [searchQuery, setSearchQuery] = useState('');
-
-    const filteredMovies = movies.filter((movie) =>
-        movie.title.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-
-    const fetchData = async () => {
-        await fetch('/api/AllMovies/', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-            .then((res) => res.json())
-            .then((data) => { setMovies(data) })
-            .catch((err) => { throw new Error(err)})
-            .finally(() => console.log('done'))
-    }
-
-    useEffect(() => {
-        fetchData()
-    }, [])
+ const Film = () => {
 
     return (
-        <div className={style.container}>
-            <NavBar />
-            <div className={style.containerMedia}>
-                <SearchBar onSearch={setSearchQuery} placeholder={"Search for movies"} />
-
-                <div>
-                    <h3 className={style.h3}>Movies</h3>
-
-                    <div className={style.containerMovie}>
-                        {filteredMovies.map((movie) => (
-                            <Card
-                                fetch={fetchData}
-                                key={movie.id}
-                                media={movie}
-                            />
-                        ))}
-                    </div>
-                </div>
-            </div>
-        </div>
+        <Genre mediaType='movie' category={"film"}/>
     )
 }
 
-export default page
+export default Film

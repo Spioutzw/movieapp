@@ -3,18 +3,20 @@
 import React, { useEffect, useRef } from 'react';
 import style from './SearchBar.module.css';
 import { useSearchContext } from '@/Providers/searchProvider';
-import { useRouter,useSearchParams } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import Image from 'next/image';
 
 const SearchBar = ({ placeholder }) => {
+  
   const { searchQuery, setSearchQuery } = useSearchContext();
   const router = useRouter();
+  const url = usePathname();
   const inputRef = useRef(null);
-  const params = useSearchParams();
 
   const handleInputChange = (event) => {
     const newQuery = event.target.value;
     setSearchQuery(newQuery);
+    localStorage.setItem("inputValue", newQuery);
     router.push(`/searchResult?query=${encodeURI(newQuery)}`);
     if (newQuery === '') {
       router.push('/home');
@@ -23,17 +25,20 @@ const SearchBar = ({ placeholder }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Handle the search submission if needed, or it will update the URL automatically
   };
 
   useEffect(() => {
     inputRef.current.focus();
-    const query = params.get('query');
-    if (query) {
-      setSearchQuery(query);
+    if(url === '/searchResult') {
+      setSearchQuery(localStorage.getItem("inputValue"));
+    
+    } else {
+      setSearchQuery('');
     }
     
-  }, [searchQuery]);
+  }, [setSearchQuery, url]);
+
+  
 
   return (
     <form onSubmit={handleSubmit} className={style.searchContainer}>

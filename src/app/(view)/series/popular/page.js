@@ -1,5 +1,5 @@
 import React from 'react';
-import SeeMore from '@/components/Page/SeeMore';
+import SeeMore from '@/components/Page/Seemore/SeeMore';
 
 const PopularSeriesTV = () => {
 

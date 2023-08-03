@@ -1,8 +1,7 @@
-.containerForm{
+.containerForm {
     width: 400px;
     margin: 0 auto;
-    background-color: hsla(223, 36%, 13%, 1)
-    ;
+    background-color: hsla(223, 36%, 13%, 1);
     padding: 32px;
     margin-top: 187px;
 }
@@ -12,9 +11,11 @@
     border-bottom: solid 1px hsla(223, 23%, 46%, 0.5);
     background-color: inherit;
     width: 100%;
+    padding: 1rem;
+    border-radius: 5px;
 }
 
-.form > * {
+.form>* {
     margin-bottom: 20px;
 }
 
@@ -58,24 +59,25 @@
 }
 
 .span {
-    color : #FC4747;
+    color: #FC4747;
     font-size: 15px;
     font-weight: 300;
     line-height: 19px;
 }
 
 .error {
-    color :#FC4747;
+    color: #FC4747;
 }
 
 .passwordInputWrapper {
     /* Styles pour le wrapper du champ de mot de passe et du bouton de bascule */
     display: flex;
     align-items: center;
-    position: relative; /* Permet de positionner le bouton par rapport à l'input */
-  }
-  
-  .showHideButton {
+    position: relative;
+    /* Permet de positionner le bouton par rapport à l'input */
+}
+
+.showHideButton {
     /* Styles pour le bouton de bascule (afficher/masquer mot de passe) */
     background: transparent;
     border: none;
@@ -84,11 +86,12 @@
     right: 5px;
     top: 50%;
     transform: translateY(-50%);
-  }
-  
-  .showHideIcon {
+}
+
+.showHideIcon {
     /* Styles pour l'icône SVG */
     width: 20px;
     height: 20px;
-    fill: #444; /* Couleur de l'icône */
-  }
+    fill: #444;
+    /* Couleur de l'icône */
+}

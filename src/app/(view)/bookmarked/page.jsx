@@ -2,10 +2,10 @@
 import Card from '@/components/Card/Card';
 import NavBar from '@/components/NavBar/NavBar';
 import SearchBar from '@/components/SearchBar/SearchBar';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState,useCallback } from 'react'
 import style from './page.module.css'
 
-function page() {
+const Bookmarked = () => {
 
     const [medias, setMedias] = useState([]);
     const [idMedia , setIdMedia] = useState([]);
@@ -37,23 +37,23 @@ function page() {
         .then((data) => { setIdMedia(data) })
     }
 
-    const fetchDataMovieTmdb = async () => {
+    const fetchDataMovieTmdb = useCallback(async () => {
         idMedia.map(async (id) => {
             const category = id.category;
-          const response = await fetch(
-            `https://api.themoviedb.org/3/${category}/${id.mediaId}?api_key=${process.env.NEXT_PUBLIC_API_KEY_TMDB}`,
-            {
-              method: 'GET',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-            }
-          );
-          const data = await response.json();
-          setMedias((prevState) => [...prevState, { ...data, isBookmarked: id.isBooked,category: id.category }]);
-          return data;
+            const response = await fetch(
+                `https://api.themoviedb.org/3/${category}/${id.mediaId}?api_key=${process.env.NEXT_PUBLIC_API_KEY_TMDB}`,
+                {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                }
+            );
+            const data = await response.json();
+            setMedias((prevState) => [...prevState, { ...data, isBookmarked: id.isBooked, category: id.category }]);
+            return data;
         });
-      };
+    }, [idMedia]);
       
 
       console.log(idMedia, 'idMedia');
@@ -70,7 +70,7 @@ function page() {
         if (idMedia.length) {
             fetchDataMovieTmdb()
         }
-    }, [idMedia])
+    }, [fetchDataMovieTmdb, idMedia])
 
     return (
         <div className={style.container}>
@@ -108,4 +108,4 @@ function page() {
     )
 }
 
-export default page
+export default Bookmarked

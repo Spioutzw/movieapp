@@ -26,7 +26,7 @@ const inputs = [
     }
 ];
 
-function Register() {
+const Register = () => {
 
     const [errorBack, setErrorBack] = useState(null);
     const { push } = useRouter();

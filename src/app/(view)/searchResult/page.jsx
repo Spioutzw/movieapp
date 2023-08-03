@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState,useContext } from 'react';
+import React, { useEffect, useState, } from 'react';
 import { useSearchContext } from '@/Providers/searchProvider';
 import Card from '@/components/Card/Card';
 import NavBar from '@/components/NavBar/NavBar';
@@ -43,6 +43,7 @@ const SearchResults = () =>  {
   }, [searchQuery]);
 
   console.log(searchQuery, 'searchQuery');
+  console.log(results, 'results');
 
   return (
     <div className={style.container}>
@@ -54,7 +55,7 @@ const SearchResults = () =>  {
             <Card key={result.id} media={result} />
           )) : 
           <div className={style.containerNoResult}>
-            <p>no results for you research : "{searchQuery}"</p>
+            <p>no results for you research : {searchQuery}</p>
             <p>Suggest :</p>
             <ul>
               <li>Try different keywords</li>

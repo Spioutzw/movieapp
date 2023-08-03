@@ -6,7 +6,7 @@ import style from './Form.module.css';
 import Button from '../Button/Button';
 import Link from 'next/link';
 
-function Form({ title, Message, LoginOrRegister, inputs, textbutton, link, errorBack, handleSubmitLoginOrRegister,clearError }) {
+const Form = ({ title, Message, LoginOrRegister, inputs, textbutton, link, errorBack, handleSubmitLoginOrRegister, isLoading }) => {
 
 
   const [showPassword, setShowPassword] = useState(false);
@@ -16,23 +16,20 @@ function Form({ title, Message, LoginOrRegister, inputs, textbutton, link, error
     return acc;
   }, {}));
 
-  const { register, handleSubmit, formState: { errors } } = useForm({ resolver: yupResolver(schema), mode: 'onChange'  });
+  const { register, handleSubmit, formState: { errors } } = useForm({ resolver: yupResolver(schema), mode: 'onChange' });
 
   const onSubmit = async (data) => {
     console.log('Form submitted:', data);
     handleSubmitLoginOrRegister(data);
   };
 
-  const disabled = Object.keys(errors).length > 0;
-
-
   return (
     <div className={style.containerForm}>
       <h3 className={style.h3}>{title}</h3>
       <form className={style.form} onSubmit={handleSubmit((data) => {
-  console.log('Form submitted:', data);
-  onSubmit(data);
-})}>
+        console.log('Form submitted:', data);
+        onSubmit(data);
+      })}>
         {inputs.map((input) => (
           <div key={input.name}>
             {input.type === 'password' ? (
@@ -84,7 +81,7 @@ function Form({ title, Message, LoginOrRegister, inputs, textbutton, link, error
             <p className={style.error}>{errors[input.name]?.message}</p>
           </div>
         ))}
-        <Button submit={handleSubmit} clear={clearError} error={errors} errorServer={errorBack}  text={textbutton} disabled={disabled} />
+        <Button isLoading={isLoading} error={errors} text={textbutton} />
         {errorBack && <p className={style.error}>{errorBack}</p>}
         <div className={style.containerPSpan}>
           <p className={style.p}>{Message}</p> <Link href={link}><span className={style.span}>&nbsp; {LoginOrRegister}</span></Link>

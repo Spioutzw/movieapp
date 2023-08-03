@@ -1,0 +1,45 @@
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    grid-gap: 10px;
+    justify-items: center;
+    margin: 1rem;
+  }
+  .square {
+    background-color: #0F766E;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    transition: transform 1s;
+    cursor: pointer;
+    width: 11rem;
+    height: 11rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+  }
+
+  .h3 {
+    color: white;
+    font-size: 2rem;
+    margin: 2.5rem 1rem;
+  }
+
+  .link:last-child {
+    width: 100%;
+  }
+  
+
+  @media screen and (min-width: 1000px) {
+    .containerGenre {
+        margin-left: 7rem;
+    }
+  }
+  
+  @media screen and (min-width: 1800px) {
+    .containerGenre {
+        margin-left: unset;
+    }
+  }
