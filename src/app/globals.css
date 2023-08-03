@@ -10,7 +10,7 @@ body {
   margin-right: auto;
   height: 100%;
   width: 100%;
-  max-width: 1440px;
+  max-width: 1600px;
   background-color: hsla(224, 30%, 9%, 1);
   scrollbar-width: thin;
 }

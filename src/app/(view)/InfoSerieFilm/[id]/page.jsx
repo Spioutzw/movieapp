@@ -3,61 +3,61 @@
 import CardInfo from '@/components/Card/CardInfo';
 import React, { useEffect, useState } from 'react'
 
-function page({params}) {
+const page = ({ params, searchParams }) => {
 
 
-    const [infoMovieOrSerie, setinfoMovieOrSerie] = useState({});
+
     const [TMDbINFO, setTMDbINFO] = useState({});
+    const [isLoading, setIsLoading] = useState(true);
 
-    const fetchData = async () => {
-        await fetch(`/api/SerieOrFilmByID/`, {
-            method: 'POST',
+    console.log(searchParams, 'searchParams')
+
+
+    const fetchInfo = async () => {
+        setIsLoading(true);
+        await fetch(
+            `https://api.themoviedb.org/3/${searchParams.category}/${params.id}?api_key=${process.env.NEXT_PUBLIC_API_KEY_TMDB}`, {
+            method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ id: params.id }),
-        })
+        }
+        )
+            .then((response) => response.json())
+            .then((data) => {
+                setTMDbINFO(data)
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
 
-            .then((res) => res.json())
-            .then((data) => setinfoMovieOrSerie(data))
-            .catch((err) => {throw new Error(err)})
-            .finally(() => console.log('done'))
-    }
-    
-    const fetchInfo = async () => {
-        const category = infoMovieOrSerie.category === 'TV Series' ? 'tv' : 'movie';
-        console.log(infoMovieOrSerie.title);
-        await fetch(
-            `https://api.themoviedb.org/3/search/${category}?api_key=${process.env.NEXT_PUBLIC_API_KEY_TMDB}&query=${encodeURIComponent(
-              infoMovieOrSerie.title)}&year=${infoMovieOrSerie.year}&language=en-US` , {
+            await fetch(`https://api.themoviedb.org/3/${searchParams.category}/${params.id}/credits?api_key=${process.env.NEXT_PUBLIC_API_KEY_TMDB}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-            }
-
-          )
-            .then((response) => response.json())
-            .then((data) => {
-                console.log(data.results[0]);
-                setTMDbINFO(data.results[0]);
-            });
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    console.log(data, 'data');  setTMDbINFO((prevState) => ({ ...prevState, cast: data.cast }))
+                }
+                )
+                .catch((error) => {
+                    console.error('Error:', error);
+                }
+                );
+                setIsLoading(false);
     }
 
     useEffect(() => {
-        fetchData()
-        if(infoMovieOrSerie.title) {
-            fetchInfo()
-        }
-        console.log(TMDbINFO, 'TMDbINFO');
-       
-    }, [infoMovieOrSerie.title])
+        fetchInfo();
+    }, [])
 
-  return (
-    <div>
-        {infoMovieOrSerie.title && <CardInfo movie={infoMovieOrSerie} info={TMDbINFO}  />}
-    </div>
-  )
+    return (
+        <div>
+            { !isLoading && Object.keys(TMDbINFO).length > 0 && <CardInfo info={TMDbINFO} />}
+        </div>
+    )
 }
 
 export default page

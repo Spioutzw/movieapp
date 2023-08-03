@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react'
 import style from './page.module.css'
 import { getSession } from 'next-auth/react';
 
- function page() {
+ const page = () => {
 
     const [movies, setMovies] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
@@ -46,7 +46,7 @@ import { getSession } from 'next-auth/react';
                             <Card
                                 fetch={fetchData}
                                 key={movie.id}
-                                film={movie}
+                                media={movie}
                             />
                         ))}
                     </div>

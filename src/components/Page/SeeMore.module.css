@@ -1,0 +1,24 @@
+.containerMedia {
+    padding: 1.5rem 1rem;
+  }
+
+  .containerMovieTrending {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    grid-auto-rows: 1fr;
+    grid-gap: 1rem;
+   
+  }
+
+
+  @media screen and (min-width: 1000px) {
+    .containerMedia {
+        margin-left: 7rem;
+    }
+  }
+  
+  @media screen and (min-width: 1800px) {
+    .containerMedia {
+        margin-left: unset;
+    }
+  }

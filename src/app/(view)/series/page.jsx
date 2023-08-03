@@ -46,7 +46,7 @@ function page() {
                             <Card
                                 fetch={fetchData}
                                 key={serie.id}
-                                film={serie}
+                                media={serie}
                             />
                         ))}
                     </div>

@@ -7,31 +7,19 @@ if (process.env.NODE_ENV === "development") global.prisma = prisma;
 
 export default prisma;
 
-async function getAvatarurl(email) {
-    const avatarUrl = await prisma.user.findUnique({
+async function getUserinfo(email) {
+    const infoUser = await prisma.user.findUnique({
         where: {
             email: email,
         },
         select: {
             avatar: true,
-        },
-    });
-    return avatarUrl.avatar;
-}
-
-async function getIdUser(email)  {
-    const idUser = await prisma.user.findUnique({
-        where: {
-            email: email,
-        },
-        select: {
             id: true,
         },
     });
-    return idUser.id;
+    return infoUser;
 }
 
 
-export { getIdUser };
-export { getAvatarurl };
+export { getUserinfo };
 

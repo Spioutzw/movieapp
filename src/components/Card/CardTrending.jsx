@@ -2,39 +2,43 @@ import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 import style from './CardTrending.module.css'
 import Link from 'next/link';
+import { urlPicture,getYear } from '@/utils/utils';
 
-function CardTrending(props) {
+const CardTrending = ({ media }) => {
 
-  const [trending, setTrending] = useState(props.film);
-
-
+  const [trending, setTrending] = useState(media);
 
   useEffect(() => {
-    setTrending(props.film)
-  }, [props.film])
+    setTrending(media)
+  }, [media])
+
+  console.log(trending, 'trending')
 
 
-  async function updateBookmarkStatus(filmId, newBookmarkStatus) {
+  const updateBookmarkStatus = async (filmId, newBookmarkStatus,category) => {
     try {
-      const response = await fetch(`/api/AllMovieAndSerie/`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-
-        body: JSON.stringify({ isBookmarked: newBookmarkStatus, filmId: filmId }),
-      });
-      if (!response.ok) {
-        throw new Error("Error updating bookmark status in database");
-      }
+        const method = newBookmarkStatus ? "POST" : "DELETE";
+        let url = `/api/AllBookMarked`;
+        if (method === "DELETE") {
+            url += `?id=${filmId}`;
+        }
+        const response = await fetch(url, {
+            method,
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: method === "POST" ? JSON.stringify({ filmId: filmId.toString(), category: category  }) : undefined,
+        });
+        if (!response.ok) {
+            throw new Error("Error updating bookmark status in database");
+        }
     } catch (error) {
-      console.error(error);
+        console.error(error, 'error updateBookmarkStatus');
     }
+}
 
-  }
-
-  function handleBookmarkClick(filmId, newBookmarkStatus) {
-    updateBookmarkStatus(filmId, newBookmarkStatus)
+  const handleBookmarkClick = (filmId, newBookmarkStatus,category) => {
+    updateBookmarkStatus(filmId, newBookmarkStatus,category)
       .then(() => {
         console.log("Bookmark status updated in database");
         // Update state to re-render component with new bookmark status
@@ -42,7 +46,6 @@ function CardTrending(props) {
           ...prevState,
           isBookmarked: newBookmarkStatus,
         }));
-        props.fetch()
       })
       .catch((error) => {
         // Handle error updating bookmark status in database
@@ -53,17 +56,18 @@ function CardTrending(props) {
   return (
     <div className={style.movie}>
       <div className={style.containerImage}>
-        <Image className={style.image} draggable={false} src={trending.thumbnail.regular.large} fill alt=" image d'un film " />
-        {trending.isBookmarked ? <Image className={style.bookmark} src={'/assets/icon-bookmark-full.svg'} alt='icon' height={32} width={32} onClick={() => handleBookmarkClick(trending.id, !trending.isBookmarked)} /> : <Image className={style.bookmark} src={'/assets/icon-bookmark-empty.svg'} alt='icon' height={32} width={32} onClick={() => handleBookmarkClick(trending.id, !trending.isBookmarked)} />}
+        <Image className={style.image} draggable={false} src={urlPicture.large + trending.backdrop_path} fill alt=" image d'un film " />
+        {trending.isBookmarked ? <Image className={style.bookmark} src={'/assets/icon-bookmark-full.svg'} alt='icon' height={32} width={32} onClick={() => handleBookmarkClick(trending.id, !trending.isBookmarked,trending.category)} /> : <Image className={style.bookmark} src={'/assets/icon-bookmark-empty.svg'} alt='icon' height={32} width={32} onClick={() => handleBookmarkClick(trending.id, !trending.isBookmarked,trending.category)} />}
       </div>
 
       <div className={style.info}>
         <div className={style.containerSpan}>
-          <span>{trending.year}</span>
-          {trending.category === 'Movie' ? <Image src={'/assets/icon-category-movie.svg'} alt='icon' height={12} width={12} /> : <Image src={'/assets/icon-category-tv.svg'} alt='icon' height={12} width={12} />}
-          <span>{trending.category}</span>
+          <span className={style.year}>{trending.release_date ? getYear(trending.release_date) : getYear(trending.first_air_date)}</span>
+          {trending.media_type === 'movie' ? <Image className={style.icon} src={'/assets/icon-category-movie.svg'} alt='icon' height={12} width={12} /> : <Image className={style.icon} src={'/assets/icon-category-tv.svg'} alt='icon' height={12} width={12} />}
+          <span className={style.category}>{trending.media_type}</span>
+          <div className={style.rating}><span>{trending.vote_average}</span></div>
         </div>
-        <Link href={`/InfoSerieFilm/${trending.id}`} ><h3 className={style.h3} >{trending.title}</h3></Link>
+        <Link href={`/InfoSerieFilm/${trending.id}?category=${trending.media_type}`} ><h3 className={style.h3} >{trending.title ? trending.title : trending.name }</h3></Link>
       </div>
     </div>
   )

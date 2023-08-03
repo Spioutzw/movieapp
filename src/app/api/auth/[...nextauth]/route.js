@@ -1,8 +1,8 @@
 import NextAuth from 'next-auth';
 import CredentialsProvider from "next-auth/providers/credentials"
-import { getAvatarurl, getIdUser } from '@/app/libs/prismadb';
+import { getUserinfo } from '@/app/libs/prismadb';
 
-const handler = NextAuth({
+const authOptions = {
   providers: [
     CredentialsProvider({
       name: 'credentials',
@@ -45,15 +45,18 @@ const handler = NextAuth({
   callbacks: {
     async session({ session, token, }) {
 
-      const avatar = await getAvatarurl(token.email)
-      const idUser = await getIdUser(token.email)
+      const infoUser = await getUserinfo(session.user.email);
 
-      session.user = { avatar: avatar, idUser: idUser };
+      session.user = { infoUser };
       session.token = token;
       return session;
     },
   }, secret: process.env.NEXTAUTH_SECRET,
 
-});
+};
+
+const handler = NextAuth(authOptions);
+
+export { authOptions}
 
 export { handler as GET, handler as POST }

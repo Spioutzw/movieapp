@@ -54,8 +54,8 @@ function NavBar() {
     }
 
     useEffect(() => {
-        if (session && session.user.avatar) {
-          setAvatar(session.user.avatar);
+        if (session && session.user.infoUser.avatar) {
+          setAvatar(session.user.infoUser.avatar);
         }
       }, [session]);
 

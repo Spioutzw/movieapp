@@ -28,16 +28,10 @@ const inputs = [
 
 function Register() {
 
-    const { data: session } = useSession();
     const [errorBack, setErrorBack] = useState(null);
     const { push } = useRouter();
 
-    useEffect(() => {
-        if (session) {
-            push('/home');
-        }
-    }, []);
-
+  
 
     const handleSubmit = async (data) => {
      

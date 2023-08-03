@@ -1,0 +1,34 @@
+
+.containerMedia {
+    margin: 0 auto;
+    padding: 1.5rem 1rem;
+}
+
+.containerMediaSearch {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    grid-gap: 1rem;
+    justify-items: center;
+}
+
+.containerNoResult {
+    margin-top: 10rem
+}
+
+.containerNoResult > * {
+    color: white;
+    margin: 14px 0;
+}
+
+
+@media screen and (min-width: 1000px) {
+    .containerMedia {
+        margin-left: 7rem;
+    }
+}
+
+@media screen and (min-width: 1630px) {
+    .containerMedia {
+        margin-left: unset;
+    }
+}

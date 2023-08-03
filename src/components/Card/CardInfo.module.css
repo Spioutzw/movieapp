@@ -1,0 +1,159 @@
+.container {
+    display: flex;
+    justify-content: center;
+}
+
+.container>* {
+    color: white;
+}
+
+.containerImg {
+    position: relative;
+    margin-right: 7rem;
+    text-align: center;
+    padding-right: 2rem;
+}
+
+.img {
+    opacity: 0.8;
+    border-radius: 2%;
+    max-height: 550px;
+    max-width: 350px;
+}
+
+.container {
+    padding: 1.5rem 1rem;
+    margin: 2rem 1.5rem;
+}
+
+
+.h2 {
+    font-size: 3rem;
+    line-height: 1;
+}
+
+
+.containerImgCast {
+    position: relative;
+    height: 96px;
+    width: 96px;
+}
+
+.imgCast {
+    border-radius: 50%;
+}
+
+.infoMedia {
+    display: flex;
+    justify-content: space-between;
+}
+
+.infoMedia>div>p:first-child {
+    color: #808287;
+}
+
+.infoMedia>div>p {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+}
+
+
+.containerCast {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    justify-items: center;
+    margin-left: 7rem;
+}
+
+.containerGenre {
+    display: flex;
+}
+
+.containerGenre>p {
+    margin-right: .5rem;
+    border-radius: .375rem;
+    border-style: none;
+    padding: 1px .5rem;
+    background-color: white;
+    color: #10141e;
+    text-align: center;
+    font-weight: 500;
+}
+
+.containerRating {
+    display: flex;
+}
+
+.containerRating>p {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+    margin-right: 1rem;
+}
+
+.ratingStar {
+    align-self: center;
+}
+
+.containerInfo {
+    width: 60%;
+    max-width: 500px;
+}
+
+.containerInfo>* {
+    margin-bottom: 2rem;
+}
+
+.h3 {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    margin-bottom: .5rem;
+}
+
+.containerImgInfo {
+    display: flex;
+    margin: 1rem 0;
+    width: 100%;
+    max-width: 300px;
+}
+
+.containerInfoCast {
+    align-self: center;
+    margin-left: 1rem;
+    width: 100px;
+
+}
+
+
+
+
+@media screen and (min-width: 1000px) {
+    .container {
+        margin-left: 7rem;
+    }
+}
+
+@media screen and (min-width: 1800px) {
+    .container {
+        margin-left: unset;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .containerInfo {
+        width: unset;
+    }
+
+    .containerImg {
+        margin-right: 0;
+    }
+
+    .containerInfo {
+        margin-top: 2rem;
+    }
+
+}
