@@ -56,7 +56,7 @@ const CardTrending = ({ media }) => {
   return (
     <div className={style.movie}>
       <div className={style.containerImage}>
-        <Image className={style.image} draggable={false} src={urlPicture.large + trending.backdrop_path} fill alt=" image d'un film " loading='lazy' />
+      <Link href={`/InfoSerieFilm/${trending.id}?media_type=${trending.media_type}`} > <Image className={style.image} draggable={false} src={urlPicture.large + trending.backdrop_path} fill alt=" image d'un film " loading='lazy' /></Link>
         {trending.isBookmarked ? <Image className={style.bookmark} src={'/assets/icon-bookmark-full.svg'} alt='icon' height={32} width={32} onClick={() => handleBookmarkClick(trending.id, !trending.isBookmarked,trending.category)} /> : <Image className={style.bookmark} src={'/assets/icon-bookmark-empty.svg'} alt='icon' height={32} width={32} onClick={() => handleBookmarkClick(trending.id, !trending.isBookmarked,trending.category)} />}
       </div>
 
@@ -67,7 +67,7 @@ const CardTrending = ({ media }) => {
           <span className={style.category}>{trending.media_type}</span>
           <div className={style.rating}><span>{trending.vote_average}</span></div>
         </div>
-        <Link href={`/InfoSerieFilm/${trending.id}?media_type=${trending.media_type}`} ><h3 className={style.h3} >{trending.title ? trending.title : trending.name }</h3></Link>
+       <h3 className={style.h3} >{trending.title ? trending.title : trending.name }</h3>
       </div>
     </div>
   )

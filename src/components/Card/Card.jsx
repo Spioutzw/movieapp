@@ -70,7 +70,7 @@ const Card = ({ media, onUpdateMovies, isBookmarkedPage, twoLastCard, isLoading 
       {!isLoading ?
         <div className={style.movie}>
           <div className={style.containerImage}>
-            <Image className={`${style.image} ${mediaCard.backdrop_path === null && mediaCard.poster_path === null
+          <Link href={`/InfoSerieFilm/${mediaCard.id}?media_type=${mediaCard.category ? mediaCard.category : mediaCard.media_type}`} >   <Image className={`${style.image} ${mediaCard.backdrop_path === null && mediaCard.poster_path === null
               ? style.placeholderImage
               : ""
               }`} draggable={false} src={
@@ -81,7 +81,7 @@ const Card = ({ media, onUpdateMovies, isBookmarkedPage, twoLastCard, isLoading 
                     : urlPicture.large + mediaCard.backdrop_path} width={240} height={140} alt=" image d'un film " placeholder='blur'
               blurDataURL={`data:image/svg+xml;base64,${toBase64(
                 shimmer(240, 140)
-              )}`} />
+              )}`} /> </Link>
             {mediaCard.isBookmarked ? <Image className={style.bookmark} src={'/assets/icon-bookmark-full.svg'} alt='icon' height={32} width={32} onClick={() => handleBookmarkClick(mediaCard.id, !mediaCard.isBookmarked, mediaCard.category)} /> : <Image className={style.bookmark} src={'/assets/icon-bookmark-empty.svg'} alt='icon' height={32} width={32} onClick={() => handleBookmarkClick(mediaCard.id, !mediaCard.isBookmarked, mediaCard.category)} />}
           </div>
           <div className={style.info}>
@@ -91,7 +91,7 @@ const Card = ({ media, onUpdateMovies, isBookmarkedPage, twoLastCard, isLoading 
               <span className={style.category}>{mediaCard.category}</span>
               <div className={style.rating}><span>{mediaCard.vote_average}</span></div>
             </div>
-            <Link href={`/InfoSerieFilm/${mediaCard.id}?media_type=${mediaCard.category ? mediaCard.category : mediaCard.media_type}`} ><h3 className={style.h3} >{mediaCard.title ? mediaCard.title : mediaCard.name}</h3></Link>
+            <h3 className={style.h3} >{mediaCard.title ? mediaCard.title : mediaCard.name}</h3>
           </div>
         </div>
         :
