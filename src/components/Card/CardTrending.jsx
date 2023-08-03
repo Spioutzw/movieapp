@@ -67,7 +67,7 @@ const CardTrending = ({ media }) => {
           <span className={style.category}>{trending.media_type}</span>
           <div className={style.rating}><span>{trending.vote_average}</span></div>
         </div>
-        <Link href={`/InfoSerieFilm/${trending.id}?category=${trending.media_type}`} ><h3 className={style.h3} >{trending.title ? trending.title : trending.name }</h3></Link>
+        <Link href={`/InfoSerieFilm/${trending.id}?media_type=${trending.media_type}`} ><h3 className={style.h3} >{trending.title ? trending.title : trending.name }</h3></Link>
       </div>
     </div>
   )

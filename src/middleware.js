@@ -3,7 +3,6 @@ import { NextResponse } from 'next/server';
 
 export default async function middleware(req) {
   const token = await getToken({ req });
-  console.log(token, 'token');
   const isAuthenticated = !!token;
 
   if ((req.nextUrl.pathname.startsWith('/login') || req.nextUrl.pathname.startsWith('/register')) && isAuthenticated) {

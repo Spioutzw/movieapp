@@ -24,8 +24,7 @@ const SeeMore = ({ title, url, category, genre = false }) => {
     // Fetch data from API and update state
     const fetchData = useCallback(async () => {
         setIsLoading(true);
-        const separator = url.includes("?") ? "&" : "?";
-        const response = await fetch(`${url}${separator}api_key=${process.env.NEXT_PUBLIC_API_KEY_TMDB}&page=${currentPage}`, {
+        const response = await fetch(`${url}&page=${currentPage}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -34,6 +33,7 @@ const SeeMore = ({ title, url, category, genre = false }) => {
 
         });
         const data = await response.json();
+        console.log(data, 'data');
         const pageResult = data.total_pages;
         const addCategory = data.results.map((result) => ({ ...result, category: category }));
         setMedias(addCategory);

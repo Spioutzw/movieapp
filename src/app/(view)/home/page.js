@@ -8,11 +8,12 @@ import style from './page.module.css';
 import Card from '@/components/Card/Card';
 import { useSearchContext } from '@/Providers/searchProvider';
 import Link from 'next/link';
-import { fetchDataTrending,fetchPopularMovie,fetchPopularSerie,fetchTopRatedMovie,fetchTopRatedSerie,fetchUpcomingMovie,fetchUpcomingSerie } from '@/utils/utils';
+import { fetchDataTrending,fetchPopularMovie,fetchPopularSerie,fetchTopRatedMovie,fetchTopRatedSerie,fetchUpcomingMovie,fetchUpcomingSerie, addBookMarked } from '@/utils/utils';
+
 
 
 const Home = () => {
-  
+
   const [trendingMedia, setTrendingMedia] = useState([]);
 
   const [popularMovies, setPopularMovies] = useState([]);
@@ -39,60 +40,35 @@ const Home = () => {
       .then((data) => { setIdMedia(data) })
   }
 
-  const addBookMarked = useCallback(async () => {
-    idMedia.map(async (id) => {
-        const category = id.category;
-        await fetch(
-            `https://api.themoviedb.org/3/${category}/${id.mediaId}?api_key=${process.env.NEXT_PUBLIC_API_KEY_TMDB}`,
-            {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            }
-        );
-        setPopularMovies((prevState) =>
-            prevState.map((movie) =>
-                movie.id === parseInt(id.mediaId)
-                    ? { ...movie, isBookmarked: id.isBooked }
-                    : movie
-            )
-        );
-        setTrendingMedia((prevState) =>
-            prevState.map((media) =>
-                media.id === parseInt(id.mediaId)
-                    ? { ...media, isBookmarked: id.isBooked }
-                    : media
-            )
-        );
-        setPopularTvShows((prevState) =>
-            prevState.map((tvShow) =>
-                tvShow.id === parseInt(id.mediaId)
-                    ? { ...tvShow, isBookmarked: id.isBooked }
-                    : tvShow
-            )
-        );
-    });
-}, [idMedia]);
+  
+
 
   useEffect(() => {
     fetchDataTrending(setTrendingMedia);
     fetchPopularMovie(setPopularMovies);
-    fetchBookmarkedMovies(setIdMedia);
     fetchPopularSerie(setPopularTvShows);
     fetchTopRatedMovie(setTopRatedMovies);
     fetchUpcomingMovie(setUpcomingMovies);
     fetchUpcomingSerie(setUpcomingTvShows);
     fetchTopRatedSerie(setTopRatedTvShows);
+    fetchBookmarkedMovies(); 
+
   }, []);
-
-
-
+   
   useEffect(() => {
     if (idMedia.length) {
-      addBookMarked();
+      addBookMarked(
+        idMedia,
+        setPopularMovies,
+        setTrendingMedia,
+        setPopularTvShows,
+        setUpcomingTvShows,
+        setTopRatedTvShows,
+        setUpcomingMovies,
+        setTopRatedMovies
+      );
     }
-  }, [addBookMarked, idMedia])
+  }, [idMedia]);
 
   return (
     <div className={style.container}>
@@ -105,7 +81,7 @@ const Home = () => {
             <Link href={"/series/trending"}><p>See more</p></Link>
           </div>
           <div className={style.containerMovieTrending}>
-            {trendingMedia.filter((media) => media.media_type === 'movie').map((movie, id) => (
+            { trendingMedia.filter((media) => media.media_type === 'movie').map((movie, id) => (
               <CardTrending key={id} media={movie} />
             ))}
           </div>

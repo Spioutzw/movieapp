@@ -91,7 +91,7 @@ const Card = ({ media, onUpdateMovies, isBookmarkedPage, twoLastCard, isLoading 
               <span className={style.category}>{mediaCard.category}</span>
               <div className={style.rating}><span>{mediaCard.vote_average}</span></div>
             </div>
-            <Link href={`/InfoSerieFilm/${mediaCard.id}?category=${mediaCard.category ? mediaCard.category : mediaCard.media_type}`} ><h3 className={style.h3} >{mediaCard.title ? mediaCard.title : mediaCard.name}</h3></Link>
+            <Link href={`/InfoSerieFilm/${mediaCard.id}?media_type=${mediaCard.category ? mediaCard.category : mediaCard.media_type}`} ><h3 className={style.h3} >{mediaCard.title ? mediaCard.title : mediaCard.name}</h3></Link>
           </div>
         </div>
         :

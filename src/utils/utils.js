@@ -40,29 +40,14 @@ const toBase64 = str =>
     `
 
     const fetchDataTrending = async (setState) => {
-      const response = await fetch(
-        `https://api.themoviedb.org/3/trending/all/week?api_key=${process.env.NEXT_PUBLIC_API_KEY_TMDB}`,
-        {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
+      const response = await fetch(`/api/AllFetch?category=trending`);
       const data = await response.json();
+      console.log(data,'data');
       setState(data.results);
     };
-  
+    
     const fetchPopularMovie = async (setState) => {
-      const response = await fetch(
-        `https://api.themoviedb.org/3/movie/popular?api_key=${process.env.NEXT_PUBLIC_API_KEY_TMDB}`,
-        {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
+      const response = await fetch(`/api/AllFetch?category=popularMovie`);
       const data = await response.json();
       const popularMovies = data.results.map((item) => ({
         ...item,
@@ -70,17 +55,9 @@ const toBase64 = str =>
       }));
       setState(popularMovies);
     };
-  
+    
     const fetchTopRatedMovie = async (setState) => {
-      const response = await fetch(
-        `https://api.themoviedb.org/3/movie/top_rated?api_key=${process.env.NEXT_PUBLIC_API_KEY_TMDB}`,
-        {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
+      const response = await fetch(`/api/AllFetch?category=topRatedMovie`);
       const data = await response.json();
       const topRatedMovies = data.results.map((item) => ({
         ...item,
@@ -88,17 +65,9 @@ const toBase64 = str =>
       }));
       setState(topRatedMovies);
     };
-  
+    
     const fetchUpcomingMovie = async (setState) => {
-      const response = await fetch(
-        `https://api.themoviedb.org/3/movie/upcoming?api_key=${process.env.NEXT_PUBLIC_API_KEY_TMDB}`,
-        {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
+      const response = await fetch(`/api/AllFetch?category=upcomingMovie`);
       const data = await response.json();
       const upcomingMovies = data.results.map((item) => ({
         ...item,
@@ -106,18 +75,9 @@ const toBase64 = str =>
       }));
       setState(upcomingMovies);
     };
-  
-  
+    
     const fetchPopularSerie = async (setState) => {
-      const response = await fetch(
-        `https://api.themoviedb.org/3/tv/popular?api_key=${process.env.NEXT_PUBLIC_API_KEY_TMDB}`,
-        {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
+      const response = await fetch(`/api/AllFetch?category=popularSerie`);
       const data = await response.json();
       const popularSeries = data.results.map((item) => ({
         ...item,
@@ -125,35 +85,21 @@ const toBase64 = str =>
       }));
       setState(popularSeries);
     };
-  
+    
     const fetchUpcomingSerie = async (setState) => {
-      const response = await fetch(
-        `https://api.themoviedb.org/3/tv/on_the_air?api_key=${process.env.NEXT_PUBLIC_API_KEY_TMDB}`,
-        {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
+      const response = await fetch(`/api/AllFetch?category=upcomingSerie`);
+      console.log(response);
       const data = await response.json();
+      console.log(data);
       const upcomingSeries = data.results.map((item) => ({
         ...item,
         category: 'tv',
       }));
       setState(upcomingSeries);
     };
-  
+    
     const fetchTopRatedSerie = async (setState) => {
-      const response = await fetch(
-        `https://api.themoviedb.org/3/tv/top_rated?api_key=${process.env.NEXT_PUBLIC_API_KEY_TMDB}`,
-        {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
+      const response = await fetch(`/api/AllFetch?category=topRatedSerie`);
       const data = await response.json();
       const topRatedSeries = data.results.map((item) => ({
         ...item,
@@ -162,4 +108,62 @@ const toBase64 = str =>
       setState(topRatedSeries);
     };
 
-export { getYear, urlPicture, renderRating, toBase64, shimmer, fetchDataTrending, fetchPopularMovie, fetchTopRatedMovie, fetchUpcomingMovie, fetchPopularSerie, fetchUpcomingSerie, fetchTopRatedSerie }
+    const addBookMarked = async (idMedia,setPopularMovies,setTrendingMedia,setPopularTvShows,setUpcomingTvShows,setTopRatedTvShows,setUpcomingMovies, setTopRatedMovies ) => {
+      idMedia.map(async (id) => {
+          const category = id.category;
+          await fetch(`/api/AllFetch?category=${category}&mediaId=${id.mediaId}`)
+          setPopularMovies((prevState) =>
+              prevState.map((movie) =>
+                  movie.id === parseInt(id.mediaId)
+                      ? { ...movie, isBookmarked: id.isBooked }
+                      : movie
+              )
+          );
+          setTrendingMedia((prevState) =>
+              prevState.map((media) =>
+                  media.id === parseInt(id.mediaId)
+                      ? { ...media, isBookmarked: id.isBooked }
+                      : media
+              )
+          );
+          setPopularTvShows((prevState) =>
+              prevState.map((tvShow) =>
+                  tvShow.id === parseInt(id.mediaId)
+                      ? { ...tvShow, isBookmarked: id.isBooked }
+                      : tvShow
+              )
+          );
+          setUpcomingTvShows((prevState) =>
+              prevState.map((tvShow) =>
+                  tvShow.id === parseInt(id.mediaId)
+                      ? { ...tvShow, isBookmarked: id.isBooked }
+                      : tvShow
+              )
+          );
+          setTopRatedTvShows((prevState) =>
+              prevState.map((tvShow) =>
+                  tvShow.id === parseInt(id.mediaId)
+                      ? { ...tvShow, isBookmarked: id.isBooked }
+                      : tvShow
+              )
+          );
+          setUpcomingMovies((prevState) =>
+              prevState.map((movie) =>
+                  movie.id === parseInt(id.mediaId)
+                      ? { ...movie, isBookmarked: id.isBooked }
+                      : movie
+              )
+          );
+          setTopRatedMovies((prevState) =>
+              prevState.map((movie) =>
+                  movie.id === parseInt(id.mediaId)
+                      ? { ...movie, isBookmarked: id.isBooked }
+                      : movie
+              )
+          );
+
+      });
+  };
+    
+
+export { getYear, urlPicture, renderRating, toBase64, shimmer, fetchDataTrending, fetchPopularMovie, fetchTopRatedMovie, fetchUpcomingMovie, fetchPopularSerie, fetchUpcomingSerie, fetchTopRatedSerie, addBookMarked }

@@ -6,7 +6,7 @@ const GenreMovies = ({searchParams}) => {
     return (
         <SeeMore
             title={`${searchParams.genreName} Movies`}
-            url={`https://api.themoviedb.org/3/discover/movie?with_genres=${searchParams.genresid}&`}
+            url={`/api/AllFetch?media_type=movie&with_genres=${searchParams.genresid}&category=GenreMedia&`}
             category='movie' 
             genre={true}
             />

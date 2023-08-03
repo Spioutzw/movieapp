@@ -10,18 +10,13 @@ const Genre = ({mediaType,category}) => {
   const [genre, setGenre] = useState([]);
   const { setSearchQuery } = useSearchContext();
 
+  console.log(mediaType);
+
   const fetchDataByGenre = useCallback( async () => {
-    await fetch(
-      `https://api.themoviedb.org/3/genre/${mediaType}/list?api_key=${process.env.NEXT_PUBLIC_API_KEY_TMDB}&language=en-US`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    )
+    await fetch(`/api/AllFetch?media_type=${mediaType}&category=Genre&api_key=${process.env.API_KEY_TMDB}`)
       .then((res) => res.json())
       .then((data) => {
+        console.log(data);
         setGenre(data.genres);
       })
       .catch((err) => {

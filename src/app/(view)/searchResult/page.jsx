@@ -16,16 +16,11 @@ const SearchResults = () =>  {
       setResults([]);
       return;
     }
-
     const encodedQuery = encodeURIComponent(query);
-    await fetch(`https://api.themoviedb.org/3/search/multi?query=${encodedQuery}&api_key=${process.env.NEXT_PUBLIC_API_KEY_TMDB}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
+    await fetch(`/api/AllFetch?query=${encodedQuery}&category=search` )
       .then((res) => res.json())
       .then((data) => {
+        console.log(data, 'data');
         const filteredResults = data.results.filter(
           (result) => result.media_type === 'movie' || result.media_type === 'tv'
         );

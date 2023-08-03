@@ -39,28 +39,13 @@ const Bookmarked = () => {
 
     const fetchDataMovieTmdb = useCallback(async () => {
         idMedia.map(async (id) => {
-            const category = id.category;
-            const response = await fetch(
-                `https://api.themoviedb.org/3/${category}/${id.mediaId}?api_key=${process.env.NEXT_PUBLIC_API_KEY_TMDB}`,
-                {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                }
-            );
+            const response = await fetch(`/api/AllFetch?media_type=${id.category}&mediaId=${id.mediaId}&category=idMedia`);
             const data = await response.json();
             setMedias((prevState) => [...prevState, { ...data, isBookmarked: id.isBooked, category: id.category }]);
             return data;
         });
     }, [idMedia]);
       
-
-      console.log(idMedia, 'idMedia');
-            
-        console.log(medias, 'medias');
-        
-    
 
     useEffect(() => {
         fetchBookmarkedMovies()

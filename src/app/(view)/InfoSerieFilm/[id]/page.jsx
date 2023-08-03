@@ -15,41 +15,26 @@ const InfoSerieOrFilm = ({ params, searchParams }) => {
 
     const fetchInfo =  useCallback(async () => {
             setIsLoading(true);
-            await fetch(
-                `https://api.themoviedb.org/3/${searchParams.category}/${params.id}?api_key=${process.env.NEXT_PUBLIC_API_KEY_TMDB}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            }
-            )
+            await fetch(`/api/AllFetch?media_type=${searchParams.media_type}&mediaId=${params.id}&category=Info`)
                 .then((response) => response.json())
                 .then((data) => {
+                    console.log(data, 'data');
                     setTMDbINFO(data)
                 })
                 .catch((error) => {
                     console.error('Error:', error);
                 });
 
-                await fetch(`https://api.themoviedb.org/3/${searchParams.category}/${params.id}/videos?api_key=${process.env.NEXT_PUBLIC_API_KEY_TMDB}`, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                })
+                await fetch(`/api/AllFetch?media_type=${searchParams.media_type}&mediaId=${params.id}&category=Video`)
                     .then((response) => response.json())
                     .then((data) => {
+                        console.log(data, 'data');
                         const filterTrailer = data.results.filter((video) => video.type === 'Trailer')
                         setTMDbINFO((prevState) => ({ ...prevState, videos: filterTrailer }))
                     }
                     )
     
-                await fetch(`https://api.themoviedb.org/3/${searchParams.category}/${params.id}/credits?api_key=${process.env.NEXT_PUBLIC_API_KEY_TMDB}`, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                })
+                await fetch(`/api/AllFetch?media_type=${searchParams.media_type}&mediaId=${params.id}&category=Credits`)
                     .then((response) => response.json())
                     .then((data) => {
                         const producteur = data.crew.filter((crew) => crew.job === 'Director')
@@ -62,7 +47,7 @@ const InfoSerieOrFilm = ({ params, searchParams }) => {
                     );
                     setIsLoading(false);
         }
-    , [params.id, searchParams.category]);
+    , [params.id, searchParams.media_type]);
     
 
     useEffect(() => {
