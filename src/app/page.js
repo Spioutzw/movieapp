@@ -1,8 +1,8 @@
 'use client'
-import Login from './(auth)/login/page'
+import Home from "./(view)/home/page"
 
-export default function Home() {
+export default function Page() {
   return (
-      <Login/>
+      <Home/>
   )
 }

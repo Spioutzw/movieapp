@@ -2,8 +2,14 @@ import { getToken } from 'next-auth/jwt';
 import { NextResponse } from 'next/server';
 
 export default async function middleware(req) {
-  const token = await getToken({ req });
+  const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
   const isAuthenticated = !!token;
+
+  console.log(req.nextUrl.pathname, 'pathname')
+  console.log(isAuthenticated, 'isAuthenticated')
+  console.log(req.nextUrl.pathname.startsWith('/login'), 'startsWith')
+  console.log(req.nextUrl.pathname.startsWith('/register'), 'startsWith')
+  console.log(token, 'token')
 
   if ((req.nextUrl.pathname.startsWith('/login') || req.nextUrl.pathname.startsWith('/register')) && isAuthenticated) {
     return NextResponse.redirect(new URL('/home', req.url));
@@ -19,5 +25,5 @@ export default async function middleware(req) {
 
 
 export const config = { 
-    matcher: ["/home", "/film","/film/:path*","/series","/series/:path*","/bookmarked","/login","/register","/searchBar","/searchBar/:path*"]
+    matcher: ["/home", "/film","/film/:path*","/series","/series/:path*","/bookmarked","/login","/register","/searchBar","/searchBar/:path*","/"]
 }

@@ -38,6 +38,7 @@ const authOptions = {
   },
   session: {
     //database
+    strategy: 'jwt',
     jwt: true,
     maxAge: 30 * 24 * 60 * 60, // 30 days
   },
@@ -48,6 +49,7 @@ const authOptions = {
 
       session.user = { infoUser };
       session.token = token;
+      console.log(session, 'session')
       return session;
     },
     async jwt({ token, user, account, profile, isNewUser }) {
